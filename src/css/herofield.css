@@ -1,0 +1,49 @@
+:root {
+/* Colores principales */
+--color-primary: #1EA53A; /* botones */
+
+/* Fondos */
+--color-card: #FFFFFF; /* card */
+--color-navbar: #E9F7EA; /* navbar y badge */
+
+/* Textos */
+--color-title: #0B2F1A; /* títulos principales */
+--color-text-secondary: #6B776B; /* texto secundario */
+
+/* Bordes */
+--color-border: #0000000e;
+
+/* Fuentes */
+--font-weight-title: 600; /* títulos principales (semi bold) */
+--font-weight-secondary: 400; /* texto secundario (regular) */
+}
+
+
+.hero-field{
+  height:80vh;
+  background-size:cover;
+  background-position:center;
+}
+
+/* titulo */
+
+.hero-title{
+  font-weight: var(--font-weight-title);
+}
+
+/* badges */
+
+.hero-badge{
+  background: var(--color-navbar);
+  color: var(--color-title);
+  font-weight: var(--font-weight-title);
+  font-size:small;
+}
+
+/* responsive */
+
+@media (min-width:768px){
+  .hero-field{
+    height:80vh;
+  }
+}
