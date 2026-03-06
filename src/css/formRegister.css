@@ -1,7 +1,10 @@
+
+@import "cssRoot.css";
+
 .back{
     width: 100vw;
     height: 100vh;
-    background-color: #7Ca100;
+    background-color: var(--color-primary);
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -51,7 +54,7 @@
 }
 
 .error{
- color: #ff0000;
+ color: var(--primary-bg-color);
 }
 
 
