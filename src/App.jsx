@@ -1,10 +1,8 @@
-import { AdminDashboard } from './views/AdminDashboard';
+import { AppRouter } from './routes/AppRouter';
 
 function App() {
   return (
-    <>
-      <AdminDashboard />
-    </>
+    <AppRouter />
   );
 }
 

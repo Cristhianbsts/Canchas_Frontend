@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { CanchasManager } from '../components/admin/CanchasManager';
 import { UsuariosManager } from '../components/admin/UsuariosManager';
 import { ReservasManager } from '../components/admin/ReservasManager';
 import { TiendaManager } from '../components/admin/TiendaManager';
 
 export const AdminDashboard = () => {
-  const [vistaActiva, setVistaActiva] = useState('canchas');
+  // 1. Inicializamos el estado leyendo el localStorage (si no hay nada, cargamos 'canchas')
+  const [vistaActiva, setVistaActiva] = useState(() => {
+    return localStorage.getItem('vistaAdminActiva') || 'canchas';
+  });
+
+  // 2. Cada vez que el administrador hace clic en un botón del menú, guardamos esa vista en el navegador
+  useEffect(() => {
+    localStorage.setItem('vistaAdminActiva', vistaActiva);
+  }, [vistaActiva]);
 
   const renderizarVista = () => {
     switch (vistaActiva) {
@@ -43,15 +52,13 @@ export const AdminDashboard = () => {
             </span>
           </div>
 
-        
-          <a href="/" className="text-decoration-none d-md-none d-flex align-items-center" style={{ color: 'var(--color-text-secondary)' }}>
+            <Link to="/" className="text-decoration-none d-md-none d-flex align-items-center" style={{ color: 'var(--color-text-secondary)' }}>
             <i className="bi bi-box-arrow-up-left fs-4"></i>
-          </a>
-          
-        
-          <a href="/" className="text-decoration-none d-none d-md-flex align-items-center gap-1 me-4" style={{ color: 'var(--color-text-secondary)' }}>
+            </Link>
+
+            <Link to="/" className="text-decoration-none d-none d-md-flex align-items-center gap-1 me-4" style={{ color: 'var(--color-text-secondary)' }}>
             <i className="bi bi-box-arrow-up-left"></i> Volver a la web
-          </a>
+            </Link>
         </div>
         
     
@@ -112,7 +119,7 @@ export const AdminDashboard = () => {
                 className={`nav-link w-100 text-start d-flex align-items-center gap-2 ${vistaActiva === 'tienda' ? 'shadow-sm active' : ''}`} 
                 style={obtenerEstiloBoton('tienda')}
               >
-                <i className="bi bi-shop"></i> Tienda
+                <i className="bi bi-shop"></i> Productos
               </button>
             </li>
 
