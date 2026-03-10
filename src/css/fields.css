@@ -1,4 +1,5 @@
 .section-fields{
+  position: relative;
   margin-top: -30px;  
   z-index: 10;
   background-color: var(--color-card);
