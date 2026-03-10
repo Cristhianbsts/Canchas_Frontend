@@ -4,6 +4,7 @@ import { CanchasManager } from '../components/admin/CanchasManager';
 import { UsuariosManager } from '../components/admin/UsuariosManager';
 import { ReservasManager } from '../components/admin/ReservasManager';
 import { TiendaManager } from '../components/admin/TiendaManager';
+import Footer from '../components/layouts/Footer';
 
 export const AdminDashboard = () => {
   // 1. Inicializamos el estado leyendo el localStorage (si no hay nada, cargamos 'canchas')
@@ -146,7 +147,7 @@ export const AdminDashboard = () => {
           <i className="bi bi-box-arrow-right"></i> Cerrar Sesión
         </button>
       </div>
-
+      <Footer/>
     </div>
   );
 };
