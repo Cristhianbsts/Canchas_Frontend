@@ -110,17 +110,29 @@
 
 
 .password-wrapper {
-    position: relative;
+  position: relative;
 }
 
-.password-wrapper .eye {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
 }
 
+.eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.2s ease;
+}
+
+.eye:hover {
+  opacity: 1;
+}
 
 .login-button {
     margin-top: 20px;
@@ -151,6 +163,9 @@
     color: var(--color-primary);
     cursor: pointer;
     font-weight: 500;
+}
+.link-register{
+    text-decoration: none;
 }
 
 .login-image-container {
