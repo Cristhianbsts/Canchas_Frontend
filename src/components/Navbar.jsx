@@ -1,8 +1,18 @@
 import React from 'react';
+import { useState } from 'react';
+import ModalRegistro from './ModalRegistro';
 import "../css/navbar.css"
 
 const Navbar = () => {
+
+   const [mostrarModal, setMostrarModal] = useState(false);
+
+
+
+
   return (
+    <>
+    
     <nav className="navbar-custom">
       <div className="container-fluid d-flex justify-content-center">
         <ul className="nav-list d-flex list-unstyled mb-0">
@@ -29,7 +39,7 @@ const Navbar = () => {
           </li>
 
           <li className="nav-item-custom">
-            <a href="/perfil" className="nav-link-custom">
+            <a href="#" className="nav-link-custom"onClick={() => setMostrarModal(true)}>
               <i className="bi bi-person"></i>
               <span>Perfil</span>
             </a>
@@ -38,6 +48,8 @@ const Navbar = () => {
         </ul>
       </div>
     </nav>
+    <ModalRegistro isOpen={mostrarModal} onClose={() => setMostrarModal(false)} />
+    </>
   );
 };
 
