@@ -9,6 +9,7 @@ import AlertApp from "../../components/AlertApp";
 import visible from "../../assets/visible.png";
 import invisible from "../../assets/invisible.png";
 import regresar from "../../assets/regresar.png";
+import ModalRegistro from "../../components/ModalRegistro";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -32,7 +33,10 @@ const LoginScreen = () => {
     }
   };
 
+  const [mostrarModal, setMostrarModal] = useState(false);
+
   return (
+    <>
     <div className="container-fluid login-wrapper">
       <div className="row min-vh-100">
         <div className="col-12 col-lg-7 d-flex justify-content-center align-items-center abajo">
@@ -91,7 +95,7 @@ const LoginScreen = () => {
 
             <div className="register-link">
               ¿No tienes cuenta?{" "}
-              <Link to="/register" className="link-register">
+              <Link to="/login" className="link-register" onClick={() => setMostrarModal(true)}>
                 <span>Registrate acá</span>
               </Link>
             </div>
@@ -106,6 +110,9 @@ const LoginScreen = () => {
         </div>
       </div>
     </div>
+      <ModalRegistro isOpen={mostrarModal} onClose={() => setMostrarModal(false)} />
+    </>
+    
   );
 };
 

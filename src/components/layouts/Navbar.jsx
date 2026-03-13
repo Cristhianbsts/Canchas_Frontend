@@ -39,7 +39,7 @@ const Navbar = () => {
           </li>
 
           <li className="nav-item-custom">
-            <Link to="/register" className="nav-link-custom"onClick={() => setMostrarModal(true)}>
+            <Link to="/" className="nav-link-custom"onClick={() => setMostrarModal(true)}>
               <i className="bi bi-person"></i>
               <span>Perfil</span>
             </Link>
