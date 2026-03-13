@@ -1,0 +1,64 @@
+/* --- CONFIGURACIÓN PARA MÓVILES (Abajo) --- */
+
+@import url("cssRoot.css");
+
+.navbar-custom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:var(--color-navbar);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1050;
+    padding: 5px 0;
+    border-top: 1px solid #dee2e6;
+}
+
+/* --- CONFIGURACIÓN PARA COMPUTADORAS (Arriba) --- */
+@media (min-width: 992px) {
+    .navbar-custom {
+        top: 0;
+        bottom: auto; /* Desactiva el bottom */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-top: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+}
+
+.nav-list {
+    width: 100%;
+    max-width: 500px; /* Limita el ancho para que los botones no se separen de más */
+    justify-content: space-around;
+}
+
+.nav-link-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #6c757d;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link-custom i {
+    font-size: 1.4rem; /* Tamaño del ícono */
+    margin-bottom: 2px;
+}
+
+.nav-link-custom.active, .nav-link-custom:hover {
+    color: var(--color-primary); /* Color al estar activo o pasar el mouse */
+}
+
+/* Ajuste de padding para el body para que el contenido no quede tapado */
+body {
+    padding-bottom: 70px; /* Espacio para el navbar móvil */
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-bottom: 0;
+        padding-top: 70px; /* Espacio para el navbar desktop */
+    }
+}

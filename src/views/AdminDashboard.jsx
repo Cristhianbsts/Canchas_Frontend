@@ -146,7 +146,6 @@ export const AdminDashboard = () => {
           <i className="bi bi-box-arrow-right"></i> Cerrar Sesión
         </button>
       </div>
-
     </div>
   );
 };

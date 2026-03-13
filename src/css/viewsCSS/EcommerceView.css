@@ -1,0 +1,52 @@
+.contentEcommerce{
+    position: relative;
+}
+
+
+.sectionHeader{
+  width: 100vw;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary);
+
+
+}
+
+.sectionBody{
+   width: 100vw;
+    background-color: var(--color-card);
+    position: absolute;
+    border-radius: 40px 40px 0 0 ;
+    top: 50vh;
+
+}
+
+
+.sectionBodyTop{
+   border-radius: 40px 40px 0 0 ;
+   height: 30vh;
+       
+}
+
+.productsGrid{
+    width: 100%;
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+     gap: 32px;
+      justify-items: center; 
+      align-items: center;
+   }
+
+
+
+   
+   .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            height: 60vh; /* Ajusta la altura a tu gusto */
+            color: white;
+        }
