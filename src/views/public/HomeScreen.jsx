@@ -4,14 +4,47 @@ import estadioImg from "../../assets/estadio.webp"
 import principalImg from "../../assets/principal-img.webp"
 import ducha from "../../assets/ducha.webp"
 import refresco from "../../assets/refresco.webp"
+import { useState, useEffect } from "react";
 
 const HomeScreen = () => {
+
+    const [productos, setProductos] = useState([]);
+
+    useEffect(() => {
+        fetch('https://localhost:1111/api/products')
+            .then(res => res.json())
+            .then(data => setProductos(data));
+    }, []);
+
     return (
         <main>
             <section className="card-futbol">
                 <div className="zoom-container">
-                    <img src={principalImg} alt="Canchas de Futbol 5" className="zoom-image"/>
-                    <h1 className="image-title">Canchas Futbol - 5</h1>
+                    <img src={principalImg} alt="Canchas de Futbol 5" className="zoom-image" />
+                    <div className="overlay-content">
+                        <div className="main-text">
+                            <h1 className="title">Viví el fútbol como se debe</h1>
+                            <p className="subtitle">Armá el equipo, entrá a la cancha y disfrutá cada partido</p>
+                        </div>
+                        <div className="badges">
+                            <span className="badge">Abierto 19:00 a 00:00</span>
+                            <span className="badge">Estacionamiento - Parrilla - Vestuarios</span>
+                        </div>
+                        <div className="info-grid">
+                            <div className="glass-card">
+                                <h3>Canchas Premium</h3>
+                                <p>Césped sintético profesional</p>
+                            </div>
+                            <div className="glass-card">
+                                <h3>Iluminación LED</h3>
+                                <p>Jugá de día o de noche</p>
+                            </div>
+                        </div>
+                        <div className="glass-card booking-card">
+                            <h3>Reservá tu cancha ahora</h3>
+                            <p>Disponible todos los días de 19:00 a 00:00</p>
+                        </div>
+                    </div>
                 </div>
                 <div className="info-content">
                     <div className="tag"><i className="fa fa-calendar-o" aria-hidden="true"></i> Reserva en segundos</div>
@@ -89,15 +122,48 @@ const HomeScreen = () => {
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.105917472264!2d-65.20974192440858!3d-26.83658327669264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d3ad7f30f1d%3A0xf8606cd659b8e3e4!2sRollingCode%20School!5e0!3m2!1ses-419!2sar!4v1772907113097!5m2!1ses-419!2sar" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </section>
-            <section className="ads">
-                <p>Publicidad/Patrocinio</p>
-            </section>
             <section className="market">
                 <h2>Productos Sugeridos</h2>
                 <p>Equipate antes de entrar a la cancha</p>
                 <button className="availability-btn">
-                        Ver más productos <i className="fa fa-calendar-o" aria-hidden="true"></i>
-                    </button>
+                    Ver más productos <i className="fa fa-calendar-o" aria-hidden="true"></i>
+                </button>
+                <div className="cards-container">
+                    {
+                        productos.map((p, index)=>{
+                            <div key={index} className="card-container">
+      {/* Imagen y Badge de Stock */}
+      <div className="card-image-wrapper">
+        <img src={p.image} alt={p.name} className="card-image" />
+        {p.isStock && (
+          <span className="stock-badge">Stock disponible</span>
+        )}
+      </div>
+
+      {/* Cuerpo de la tarjeta */}
+      <div className="card-body">
+        <h2 className="card-title">{p.name}</h2>
+        
+        <div className="tags-container">
+          <span className="tag-item">{p.category}</span>
+          <span className="tag-item">{p.tag}</span>
+        </div>
+
+        <hr className="divider" />
+
+        {/* Footer: Precio y Botón */}
+        <div className="card-footer">
+          <div className="price-section">
+            <span className="price-value">{p.price}</span>
+            {p.isOffer && <span className="offer-label">oferta</span>}
+          </div>
+          <button className="add-button">Agregar</button>
+        </div>
+      </div>
+    </div>
+                        })
+                    }
+                </div>
             </section>
         </main>
     )
