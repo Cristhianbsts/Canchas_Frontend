@@ -1,0 +1,99 @@
+:root{
+
+/* Colores principales */
+--color-primary: #1EA53A; /* botones */
+
+/* Fondos */
+--color-card: #FFFFFF; /* card */
+--color-navbar: #E9F7EA; /* navbar y badge */
+
+/* Textos */
+--color-title: #0B2F1A; /* títulos principales */
+--color-text-secondary: #6B776B; /* texto secundario */
+
+/* Bordes */
+--color-border: #0000000e;
+
+/* Fuentes */
+--font-weight-title: 600; /* títulos principales (semi bold) */
+--font-weight-secondary: 400; /* texto secundario (regular) */
+}
+
+.footer{
+    background-color: #eeeeee;
+}
+
+.footer-cont{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: top;
+    padding: 25px;
+    flex-wrap: wrap;
+}
+
+.footer-h4{
+    color: var(--color-title);
+}
+
+.comp-name{
+    color: var(--color-primary);
+}
+
+.footer-desc{
+    color: var(--color-text-secondary);
+}
+
+.footer-item{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.footer-list{
+    list-style: none;
+    margin: 0 -25px;
+}
+
+.navigation{
+    text-decoration: none;
+    color: var(--color-text-secondary);
+}
+
+.footer-end{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.footer-end div{
+    height: fit-content;
+    margin: 30px auto;
+}
+
+.copyright{
+    margin: 0 20px;
+    text-align: center;
+}
+
+.mp-logo{
+    width: 100px;
+    text-align: center;
+}
+
+@media screen and (min-width: 1024px){
+    .footer-item{
+        width: 200px;
+    }
+
+    .footer-item:first-child{
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 1440px){
+    .footer-item{
+        width: 300px;
+    }
+}

@@ -198,7 +198,6 @@ export const CanchasManager = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
