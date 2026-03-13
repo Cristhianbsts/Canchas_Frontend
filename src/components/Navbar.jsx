@@ -12,7 +12,6 @@ const Navbar = () => {
 
   return (
     <>
-    
     <nav className="navbar-custom">
       <div className="container-fluid d-flex justify-content-center">
         <ul className="nav-list d-flex list-unstyled mb-0">
