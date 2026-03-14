@@ -1,13 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
+import {useContext, useState } from 'react';
 import ModalRegistro from './ModalRegistro';
 import "../css/navbar.css"
 import { Link } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
 
    const [mostrarModal, setMostrarModal] = useState(false);
-
+   const { user } = useContext(UserContext);
 
 
 
@@ -37,6 +37,14 @@ const Navbar = () => {
               <span>Tienda</span>
             </a>
           </li>
+
+          {user.role === "admin" && (<li className="nav-item-custom">
+            <a href="/admin" className="nav-link-custom">
+              <i className="bi bi-bag-check"></i>
+              <span>Administracion</span>
+            </a>
+          </li>)}
+
 
           <li className="nav-item-custom">
             <Link to="/register" className="nav-link-custom"onClick={() => setMostrarModal(true)}>
