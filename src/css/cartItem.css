@@ -1,0 +1,27 @@
+.cart-item-card {
+    border-radius: 18px;
+  }
+  
+  .cart-item-image {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .cart-item-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .quantity-box {
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .quantity-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }

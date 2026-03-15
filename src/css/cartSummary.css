@@ -1,0 +1,13 @@
+.cart-summary-card {
+    border-radius: 18px;
+  }
+  
+  .summary-title {
+    font-weight: 700;
+  }
+  
+  .summary-total {
+    font-size: 20px;
+    font-weight: 700;
+    color: #16a34a;
+  }
