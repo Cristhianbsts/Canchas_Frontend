@@ -6,6 +6,7 @@ import HomeScreen from '../views/HomeScreen';
 import ModalRegistro from '../components/ModalRegistro';
 import CartView from '../views/CartView';
 import EcommerceView from '../views/EcommerceView';
+import ProductDetailView from "../views/ProductDetailView";
 
 export const AppRouter = () => {
   return (
@@ -21,6 +22,7 @@ export const AppRouter = () => {
 
       <Route path="/register" element={<ModalRegistro />} />
       <Route path="/ecommerce" element={<EcommerceView />} />
+      <Route path="/producto/:id" element={<ProductDetailView />} />
 
     </Routes>
   );

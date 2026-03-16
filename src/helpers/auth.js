@@ -1,9 +1,9 @@
-const url = "http://localhost:4200/api/auth/"
+const url = "http://localhost:3002/api/login"
 
 
 
 const logIn = async (email, password) => {
-  const response = await fetch(url + "login", {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

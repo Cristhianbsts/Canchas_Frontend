@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AddToCartButton from "./AddToCartButton";
 import "../css/cardProduct.css";
 
@@ -18,7 +19,7 @@ export default function CardProduct({ product }) {
     return `http://localhost:3002${image.startsWith("/") ? image : `/${image}`}`;
   };
 
-  const productImage = construirImagen(product.image);
+  const productImage = construirImagen(product.image || product.images?.[0]);
   const productName = product.name || "Producto sin nombre";
   const productDescription = product.description || "Sin descripción";
   const productPrice = product.price || 0;
@@ -31,45 +32,50 @@ export default function CardProduct({ product }) {
         className="card h-100 shadow-sm border-0 product-card mx-auto"
         style={{ maxWidth: "360px" }}
       >
-        <div className="position-relative overflow-hidden">
-          <span className="badge badge-card text-dark position-absolute top-0 start-0 m-3 shadow-sm z-1">
-            {productStock > 0 ? "Stock disponible" : "Sin stock"}
-          </span>
-
-          <img
-            src={productImage}
-            className="card-img-top img-product"
-            alt={productName}
-          />
-        </div>
-
-        <div className="card-body pb-0">
-          <h2 className="h5 card-title fw-bold">{productName}</h2>
-
-          <div className="d-flex gap-2 mb-2 flex-wrap">
-            <span
-              className="badge badge-card rounded-pill text-dark border text-uppercase"
-              style={{ fontSize: "0.7rem" }}
-            >
-              {productCategory}
+        <Link
+          to={`/producto/${product._id}`}
+          className="text-decoration-none text-dark"
+        >
+          <div className="position-relative overflow-hidden">
+            <span className="badge badge-card text-dark position-absolute top-0 start-0 m-3 shadow-sm z-1">
+              {productStock > 0 ? "Stock disponible" : "Sin stock"}
             </span>
+
+            <img
+              src={productImage}
+              className="card-img-top img-product"
+              alt={productName}
+            />
           </div>
 
-          <p className="text-muted small mb-3">{productDescription}</p>
-        </div>
+          <div className="card-body pb-0">
+            <h2 className="h5 card-title fw-bold">{productName}</h2>
 
-        <hr className="mx-3 my-2 opacity-10" />
-
-        <div className="card-body pt-0 d-flex justify-content-between align-items-center">
-          <div>
-            <div className="fs-4 fw-bold text-dark">
-              ${Number(productPrice).toLocaleString("es-AR")}
+            <div className="d-flex gap-2 mb-2 flex-wrap">
+              <span
+                className="badge badge-card rounded-pill text-dark border text-uppercase"
+                style={{ fontSize: "0.7rem" }}
+              >
+                {productCategory}
+              </span>
             </div>
-            <div className="badge badge-card text-dark fw-normal">
-              {productStock > 0 ? "Disponible" : "Agotado"}
+
+            <p className="text-muted small mb-3">{productDescription}</p>
+          </div>
+
+          <hr className="mx-3 my-2 opacity-10" />
+
+          <div className="card-body pt-0 d-flex justify-content-between align-items-center">
+            <div>
+              <div className="fs-4 fw-bold text-dark">
+                ${Number(productPrice).toLocaleString("es-AR")}
+              </div>
+              <div className="badge badge-card text-dark fw-normal">
+                {productStock > 0 ? "Disponible" : "Agotado"}
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
 
         <div className="card-body pt-0">
           <AddToCartButton product={product} />

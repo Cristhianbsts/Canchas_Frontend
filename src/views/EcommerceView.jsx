@@ -52,6 +52,7 @@ export default function EcommerceView() {
 
   const productosFiltrados = useMemo(() => {
     const busquedaNormalizada = normalizarTexto(search)
+    
 
     return products
       .filter((product) => {

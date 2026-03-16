@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
 
   const loadUserData = async () => {
     try {
-      const response = await fetch("http://localhost:9005/api/auth/profile", {
+      const response = await fetch("http://localhost:3002/api/auth/profile", {
         credentials: "include", 
       });
       if (response.ok) {
