@@ -1,4 +1,4 @@
-const url = "http://localhost:4200/api/book/booking";
+const url = "http://localhost:3002/api/book/booking";
 
 export const getBooking = async (date, fieldId) => {
  try {
@@ -22,7 +22,7 @@ export const getBooking = async (date, fieldId) => {
   }
 };
 
-const reserveUrl = "http://localhost:4200/api/book/reserve";
+const reserveUrl = "http://localhost:3002/api/book/reserve";
 
 export const reserveBooking = async (
   fieldId,

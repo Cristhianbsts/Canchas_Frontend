@@ -1,15 +1,17 @@
 import "../css/modal.css";
 import close from "../assets/close.png";
-import { getBooking } from "../helpers/booking";
-import { reserveBooking } from "../helpers/booking";
+import { getBooking, reserveBooking } from "../helpers/booking";
 import { generateDays } from "../helpers/date";
 import { useState } from "react";
 
 const ReserveModal = ({ court, closeModal }) => {
+  if (!court) return null;
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableHours, setAvailableHours] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedHour, setSelectedHour] = useState(null);
+  const [reserving, setReserving] = useState(false);
 
   const days = generateDays(5);
 
@@ -22,44 +24,59 @@ const ReserveModal = ({ court, closeModal }) => {
       const normalizedDate = new Date(date);
       normalizedDate.setHours(0, 0, 0, 0);
 
-      const data = await getBooking(normalizedDate.toISOString(), court._id);
+      const booking = await getBooking(
+        normalizedDate.toISOString(),
+        court._id
+      );
 
-      console.log("DATA BACK:", data);
-
-      const booking = data?.msg;
       const allHours = [18, 19, 20, 21, 22, 23];
 
       const freeHours = allHours.filter((hour) => {
         const key = `time${hour}hs`;
-        return !booking?.[key]?.status;
+        const status = booking?.[key]?.status;
+        return !status || status === "Cancelada";
       });
 
       setAvailableHours(freeHours);
     } catch (error) {
-      console.log(error);
+      console.log("Error al obtener reservas:", error);
+      setAvailableHours([]);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
+
   const handleReserve = async () => {
     if (!selectedDate || !selectedHour) {
       alert("Selecciona fecha y horario");
       return;
     }
 
-    const userId = "123456"; // luego sale del context/login
+    setReserving(true);
 
-    const response = await reserveBooking(
-      court._id,
-      selectedDate.toISOString(),
-      selectedHour,
-      userId,
-    );
+    try {
+      const normalizedDate = new Date(selectedDate);
+      normalizedDate.setHours(0, 0, 0, 0);
 
-    console.log("RESERVA:", response);
+      const response = await reserveBooking(
+        court._id,
+        normalizedDate.toISOString(),
+        selectedHour
+      );
 
-    // volver a cargar horarios
-    handleSelectDate(selectedDate);
+      if (!response?.ok) {
+        throw new Error(response?.msg || "No se pudo realizar la reserva");
+      }
+
+      alert("Reserva realizada correctamente");
+      setSelectedHour(null);
+      await handleSelectDate(selectedDate);
+    } catch (error) {
+      console.log("Error al reservar:", error);
+      alert(error.message || "No se pudo realizar la reserva");
+    } finally {
+      setReserving(false);
+    }
   };
 
   return (
@@ -75,28 +92,37 @@ const ReserveModal = ({ court, closeModal }) => {
         <h6>Reservar Turno</h6>
         <h5>{court.name}</h5>
 
-        {/* FECHAS */}
         <p className="mt-3">Fecha</p>
 
         <div className="dates-container">
-          {days.map((day, i) => (
-            <button
-              key={i}
-              onClick={() => handleSelectDate(day)}
-              className="date"
-            >
-              {day.getDate()}/{day.getMonth() + 1}
-            </button>
-          ))}
+          {days.map((day, i) => {
+            const isSelected =
+              selectedDate &&
+              new Date(selectedDate).toDateString() === day.toDateString();
+
+            return (
+              <button
+                key={i}
+                onClick={() => handleSelectDate(day)}
+                className={isSelected ? "date active" : "date"}
+                disabled={loading || reserving}
+              >
+                {day.getDate()}/{day.getMonth() + 1}
+              </button>
+            );
+          })}
         </div>
 
-        {/* HORARIOS */}
         <p className="mt-3">Horarios Disponibles</p>
 
         {loading && (
-          <div class="spinner-border text-success" role="status">
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
+        )}
+
+        {!loading && selectedDate && availableHours.length === 0 && (
+          <p>No hay horarios disponibles para esa fecha.</p>
         )}
 
         <div className="hours-container">
@@ -105,15 +131,21 @@ const ReserveModal = ({ court, closeModal }) => {
               key={i}
               className={selectedHour === hour ? "hour active" : "hour"}
               onClick={() => setSelectedHour(hour)}
+              disabled={reserving}
             >
               {hour}:00
             </button>
           ))}
         </div>
+
         <div className="reserve-footer">
           <span>${court.pricePerHour}</span>
-          <button className="btn-reserve" onClick={handleReserve}>
-            Confirmar
+          <button
+            className="btn-reserve"
+            onClick={handleReserve}
+            disabled={!selectedDate || !selectedHour || reserving}
+          >
+            {reserving ? "Reservando..." : "Confirmar"}
           </button>
         </div>
       </div>
