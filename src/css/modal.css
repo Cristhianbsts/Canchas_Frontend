@@ -101,6 +101,51 @@
     border-radius: 6px;
 }
 
+/* CONTENEDOR FECHAS */
+.dates-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+/* CUADRADO FECHA */
+.date {
+  min-width: 65px;
+  height: 65px;
+  border-radius: 12px;
+  border: 2px solid var(--color-border);
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+   border: 1px solid var(--color-primary);
+}
+
+
+.hours-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+ 
+}
+
+/* BOTON HORA */
+.hour {
+  height: 45px;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+   border: 1px solid var(--color-primary);
+}
+
+
+
+
 
 @media (min-width: 768px) {
 

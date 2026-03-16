@@ -11,7 +11,7 @@ const ListCardField = () => {
   useEffect(() => {
     const fetchFields = async () => {
       const data = await getField();
-      setFields(data.fields);
+      setFields(data);
     };
 
     fetchFields();
