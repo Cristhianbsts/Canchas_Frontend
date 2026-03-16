@@ -37,8 +37,9 @@ export const AdminDashboard = () => {
     <div className="d-flex flex-column min-vh-100">
       
       <header 
-        className="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 shadow-sm gap-3" 
-        style={{ backgroundColor: 'var(--color-card)', borderBottom: '1px solid var(--color-border)' }}
+        // MODIFICACIÓN: Agregamos mb-0 para que el header no empuje hacia abajo
+        className="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 shadow-sm gap-3 mb-0" 
+        style={{ backgroundColor: 'var(--color-card)', borderBottom: '1px solid var(--color-border)', zIndex: 1020 }}
       >
         <div className="d-flex align-items-center justify-content-between w-100" style={{ maxWidth: '100%' }}>
         
@@ -134,7 +135,8 @@ export const AdminDashboard = () => {
         </aside>
 
        
-        <main className="p-3 p-md-5 flex-grow-1 overflow-auto" style={{ backgroundColor: 'var(--color-card)' }}>
+        {/* MODIFICACIÓN: Cambiamos p-md-5 por pt-4 para que el contenido suba */}
+        <main className="pt-4 px-3 px-md-4 flex-grow-1 overflow-auto" style={{ backgroundColor: 'var(--color-card)' }}>
           {renderizarVista()}
         </main>
         
