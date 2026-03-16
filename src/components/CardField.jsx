@@ -1,7 +1,7 @@
 import "../css/cardfield.css";
 
 const CardField = ({ court, openModal }) => {
-  const {name,pricePerHour,image ,active} =court
+  const {name,pricePerHour,image ,active,id} =court
   return (
     <section className="col-12 col-md-6 col-lg-4 mb-4 ">
       <div className="card court-card shadow-sm">
@@ -25,14 +25,14 @@ const CardField = ({ court, openModal }) => {
           <div className="d-flex gap-2 flex-wrap mb-3">
             <span className=" badge-tag">Futbol 5</span>
             <span className=" badge-tag">Césped Sintético</span>
-            <span className=" badge-tag">Techada</span>
+            <span className=" badge-tag">Al arie libre</span>
           </div>
 
           <hr />
 
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h4 className="price">{pricePerHour}</h4>
+              <h4 className="price">${pricePerHour}</h4>
               <small className="text-muted">por hora</small>
             </div>
 

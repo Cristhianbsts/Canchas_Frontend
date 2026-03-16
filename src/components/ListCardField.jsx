@@ -12,6 +12,7 @@ const ListCardField = () => {
     const fetchFields = async () => {
       const data = await getField();
       setFields(data);
+      console.log(data)
     };
 
     fetchFields();
