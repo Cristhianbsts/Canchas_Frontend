@@ -1,0 +1,185 @@
+/* =========================
+   HERO
+========================= */
+
+.hero-field {
+   min-height: 80vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+/* =========================
+   IMAGEN HERO
+========================= */
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  animation: heroZoom 1.8s ease-out forwards;
+}
+
+
+/* overlay para bajar luces */
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.37),
+    rgba(0, 0, 0, 0)
+  );
+  z-index:1;
+}
+
+
+/* asegurar contenido arriba */
+
+.hero-field .container{
+  position:relative;
+  z-index:2;
+}
+
+
+/* =========================
+   TITULO
+========================= */
+
+.hero-title{
+  font-weight:var(--font-weight-title);
+  margin-top:3rem;
+  line-height:1.2;
+  max-width:650px;
+}
+
+
+/* descripción */
+
+.hero-description{
+  opacity:.9;
+  margin-top:12px;
+  max-width:520px;
+  font-size:.95rem;
+}
+
+.hero-badge{
+  background-color: var(--color-navbar);
+}
+
+
+
+/* =========================
+   STATS
+========================= */
+
+.stat-card{
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  border-radius:10px;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.stat-card h3{
+  margin:0;
+  font-size:1.2rem;
+}
+
+.stat-card p{
+  margin:0;
+  font-size:.75rem;
+  opacity:.85;
+}
+
+
+/* centrar última stat en mobile */
+
+.stat-last{
+  display:flex;
+}
+
+.stat-last .stat-card{
+  width:100%;
+}
+
+
+/* =========================
+   ANIMACIÓN HERO
+========================= */
+
+@keyframes heroZoom {
+
+  0%{
+    transform:scale(1.3);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width:768px){
+  .hero-field .container{
+    margin-top: 50px;
+   }
+
+  .hero-title{
+    margin-top:2rem;
+  }
+
+  .hero-description{
+    font-size:1rem;
+  }
+
+  .stat-card{
+    padding:16px;
+    border-radius:12px;
+  }
+
+  .stat-card h3{
+    font-size:1.5rem;
+  }
+
+  .stat-card p{
+    font-size:.85rem;
+  }
+
+}
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width:992px){
+   .hero-field .container{
+    margin-top: 30px;
+   }
+  .hero-title{
+    margin-top:0;
+  }
+
+  .stat-card{
+    padding:18px;
+    border-radius:14px;
+  }
+
+  .stat-card h3{
+    font-size:1.8rem;
+  }
+
+  .stat-card p{
+    font-size:.9rem;
+  }
+
+}
