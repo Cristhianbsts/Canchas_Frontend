@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
+import { Link } from 'react-router-dom';
 
 const ModalRegistro = ({ isOpen, onClose }) => {
   // Estados para controlar la visibilidad de las contraseñas
@@ -19,7 +20,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
      
        try {
      
-          const res =   await fetch('http://localhost:3002/api/register/register', {
+          const res =   await fetch('http://localhost:2500/api/register', {
              method: 'POST',
              headers: {
                  'Content-Type': 'application/json',
@@ -162,7 +163,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
 
             <div className="mt-4 small">
               <span className="text-muted">¿Ya tienes cuenta? </span>
-              <a href="#" className="text-decoration-none fw-bold" style={{ color: '#1ea53a' }}>Ingresa aquí</a>
+              <Link to="/login" className="text-decoration-none fw-bold" style={{ color: '#1ea53a' }}>Ingresa aquí</Link>
             </div>
           </div>
         </div>

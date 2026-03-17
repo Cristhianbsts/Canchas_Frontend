@@ -10,6 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
+    "font-awesome": "^4.7.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+=======
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "font-awesome": "^4.7.0",
@@ -17,6 +22,7 @@
     "react-dom": "^19.2.4",
     "react-hook-form": "^7.71.2",
     "react-router": "^7.13.1",
+>>>>>>> dev
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {

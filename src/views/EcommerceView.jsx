@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import CardProduct from '../components/CardProduct'
 import "../css/viewsCSS/EcommerceView.css"
 import Pagination from '../components/Pagination'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/layouts/Navbar'
 
 export default function EcommerceView() {
   const [products, setProducts] = useState([])

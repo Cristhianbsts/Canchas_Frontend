@@ -1,5 +1,5 @@
 import mercadoPago from "../../assets/mercado-pago.webp"
-import 'font-awesome/css/font-awesome.min.css';
+//import 'font-awesome/css/font-awesome.min.css';
 import "../../css/footer.css"
 import { Link } from "react-router-dom";
 

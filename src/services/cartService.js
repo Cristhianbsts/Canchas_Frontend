@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3002/api/cart";
+const API_URL = "http://localhost:2500/api/cart";
 
 export const getCartRequest = async () => {
   const response = await fetch(API_URL, {
