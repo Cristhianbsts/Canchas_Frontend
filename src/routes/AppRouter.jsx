@@ -8,21 +8,27 @@ import CartView from '../views/CartView';
 import EcommerceView from '../views/EcommerceView';
 import ProductDetailView from "../views/ProductDetailView";
 import Fields from "../views/public/Fields"
+import { MainLayout } from '../layout/MainLayout'; 
 
 export const AppRouter = () => {
   return (
     <Routes>
       {/* <Route element={<PagesLayout />}> */}
 
+      <Route element={<MainLayout />}>
         <Route path="/" element={<HomeScreen />} />
-
         <Route path="/cart" element={<CartView />} />
+        <Route path="/ecommerce" element={<EcommerceView />} />
+        <Route path="/producto/:id" element={<ProductDetailView />} />
+      </Route>
 
-        <Route path="/admin" element={<AdminDashboard />} />
 
-        <Route path="/login" element={<LoginScreen />} />
+      {/* --- RUTAS INDEPENDIENTES --- */}
 
-        <Route path="/register" element={<ModalRegistro />} />
+      <Route path="/admin/*" element={<AdminDashboard />} /> 
+      
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/register" element={<ModalRegistro />} />
 
         <Route path="/ecommerce" element={<EcommerceView />} />
 
