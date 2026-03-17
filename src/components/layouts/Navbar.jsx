@@ -54,7 +54,7 @@ const Navbar = () => {
             {user?.role === "admin" && (
               <li className="nav-item-custom">
                 <Link to="/admin" className="nav-link-custom">
-                  <i className="bi bi-bag-check"></i>
+                  <i class="bi bi-columns-gap"></i>
                   <span>Administracion</span>
                 </Link>
               </li>
