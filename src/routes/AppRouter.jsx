@@ -7,23 +7,30 @@ import ModalRegistro from '../components/ModalRegistro';
 import CartView from '../views/CartView';
 import EcommerceView from '../views/EcommerceView';
 import ProductDetailView from "../views/ProductDetailView";
+import Fields from "../views/public/Fields"
 
 export const AppRouter = () => {
   return (
     <Routes>
+      {/* <Route element={<PagesLayout />}> */}
 
-      <Route path="/" element={<HomeScreen />} />
+        <Route path="/" element={<HomeScreen />} />
 
-      <Route path="/cart" element={<CartView />} />
+        <Route path="/cart" element={<CartView />} />
 
-      <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
 
-      <Route path="/login" element={<LoginScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
 
-      <Route path="/register" element={<ModalRegistro />} />
-      <Route path="/ecommerce" element={<EcommerceView />} />
-      <Route path="/producto/:id" element={<ProductDetailView />} />
+        <Route path="/register" element={<ModalRegistro />} />
 
+        <Route path="/ecommerce" element={<EcommerceView />} />
+
+        <Route path="/producto/:id" element={<ProductDetailView />} />
+
+        <Route path="/fields" element={<Fields />} />
+
+      {/* </Route> */}
     </Routes>
   );
 };

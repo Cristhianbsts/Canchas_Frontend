@@ -1,7 +1,7 @@
 const url = "http://localhost:3002/api/book/booking";
 
 export const getBooking = async (date, fieldId) => {
- try {
+  try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -12,27 +12,23 @@ export const getBooking = async (date, fieldId) => {
 
     const data = await response.json();
 
-    if (!data.ok) throw new Error("Error al obtener reservas");
+    if (!response.ok) {
+      throw new Error(data.message || "Error al obtener reservas");
+    }
 
     return data.msg;
-
   } catch (error) {
-    console.log(error);
+    console.log("getBooking error:", error);
     return null;
   }
 };
 
-const reserveUrl = "http://localhost:3002/api/book/reserve";
+const reserveUrl = "http://localhost:3002/api/book/reserveBooking";
 
-export const reserveBooking = async (
-  fieldId,
-  date,
-  time,
-  userId
-) => {
+export const reserveBooking = async (fieldId, date, time, userId) => {
   try {
     const response = await fetch(reserveUrl, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -41,13 +37,19 @@ export const reserveBooking = async (
         date,
         time,
         userId,
-        status: "Confirmado",
+        status: "Confirmada",
       }),
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Error al reservar");
+    }
+
     return data;
   } catch (error) {
-    console.log(error);
+    console.log("reserveBooking error:", error);
+    return { ok: false, message: error.message };
   }
 };

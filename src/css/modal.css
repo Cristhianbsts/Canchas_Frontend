@@ -133,15 +133,19 @@
 
 /* BOTON HORA */
 .hour {
-  height: 45px;
-  border-radius: 10px;
-  border: 2px solid #e5e7eb;
-  background: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-   border: 1px solid var(--color-primary);
-}
+    border: 1px solid #28a745;
+    background: white;
+    color: #111;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .hour.active {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+  }
 
 
 

@@ -39,8 +39,9 @@ const ReserveModal = ({ court, closeModal }) => {
 
       setAvailableHours(freeHours);
     } catch (error) {
-      console.log("Error al obtener reservas:", error);
+      console.log("Error obteniendo horarios:", error);
       setAvailableHours([]);
+      alert("No se pudieron cargar los horarios");
     } finally {
       setLoading(false);
     }
@@ -49,6 +50,14 @@ const ReserveModal = ({ court, closeModal }) => {
   const handleReserve = async () => {
     if (!selectedDate || !selectedHour) {
       alert("Selecciona fecha y horario");
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?._id || "69b72e714a9f29aa7602d50f";
+
+    if (!userId) {
+      alert("Debes iniciar sesión para reservar");
       return;
     }
 
@@ -61,11 +70,14 @@ const ReserveModal = ({ court, closeModal }) => {
       const response = await reserveBooking(
         court._id,
         normalizedDate.toISOString(),
-        selectedHour
+        selectedHour,
+        userId
       );
 
+      console.log("RESERVA:", response);
+
       if (!response?.ok) {
-        throw new Error(response?.msg || "No se pudo realizar la reserva");
+        throw new Error(response?.message || response?.msg || "No se pudo realizar la reserva");
       }
 
       alert("Reserva realizada correctamente");
@@ -85,7 +97,7 @@ const ReserveModal = ({ court, closeModal }) => {
         className="reserve-modal col-12 col-md-10 col-lg-7 col-xl-5"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-close" onClick={closeModal}>
+        <button type="button" className="modal-close" onClick={closeModal}>
           <img src={close} alt="cerrar" />
         </button>
 
@@ -102,6 +114,7 @@ const ReserveModal = ({ court, closeModal }) => {
 
             return (
               <button
+                type="button"
                 key={i}
                 onClick={() => handleSelectDate(day)}
                 className={isSelected ? "date active" : "date"}
@@ -128,6 +141,7 @@ const ReserveModal = ({ court, closeModal }) => {
         <div className="hours-container">
           {availableHours.map((hour, i) => (
             <button
+              type="button"
               key={i}
               className={selectedHour === hour ? "hour active" : "hour"}
               onClick={() => setSelectedHour(hour)}
@@ -141,6 +155,7 @@ const ReserveModal = ({ court, closeModal }) => {
         <div className="reserve-footer">
           <span>${court.pricePerHour}</span>
           <button
+            type="button"
             className="btn-reserve"
             onClick={handleReserve}
             disabled={!selectedDate || !selectedHour || reserving}
