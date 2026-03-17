@@ -1,0 +1,42 @@
+@import "cssRoot.css";
+
+
+
+.btn-card{
+   background-color: var(--color-primary) !important;
+}
+.badge-card{
+   background-color: var(--color-navbar) !important;
+}
+
+.btn-card:hover{
+   color: #000 !important;
+}
+
+/* Ajuste de la imagen para que no se deforme */
+.img-product {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* Efecto al pasar el mouse sobre la card */
+.product-card:hover .img-product {
+    transform: scale(1.05);
+}
+
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* El z-index asegura que el badge de stock esté siempre al frente */
+.z-1 {
+    z-index: 1;
+}
+

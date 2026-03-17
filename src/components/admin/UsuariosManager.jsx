@@ -7,7 +7,10 @@ export const UsuariosManager = () => {
  
   const obtenerUsuarios = async () => {
     try {
-      const response = await fetch('http://localhost:3002/api/users');
+      const response = await fetch('http://localhost:3002/api/users', { 
+        credentials: 'include' 
+      });
+      
       const data = await response.json();
       
       if (data.ok) {
@@ -37,7 +40,8 @@ export const UsuariosManager = () => {
     try {
       const response = await fetch(url, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       });
       
       const data = await response.json();

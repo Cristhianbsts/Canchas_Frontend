@@ -1,0 +1,35 @@
+:root {
+/* Colores principales */
+--color-primary: #1EA53A; /* botones */
+
+/* Fondos */
+--color-card: #FFFFFF; /* card */
+--color-navbar: #E9F7EA; /* navbar y badge */
+
+/* Textos */
+--color-title: #0B2F1A; /* títulos principales */
+--color-text-secondary: #6B776B; /* texto secundario */
+
+/* Bordes */
+--color-border: #0000000e;
+
+/* Fuentes */
+--font-weight-title: 600; /* títulos principales (semi bold) */
+--font-weight-secondary: 400; /* texto secundario (regular) */
+}
+
+/* Responsive para el menú lateral del Admin */
+.sidebar-admin {
+  width: 100%;
+  border-right: none;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Cuando la pantalla sea tamaño tablet o PC (min-width: 768px) */
+@media (min-width: 768px) {
+  .sidebar-admin {
+    width: 250px;
+    border-right: 1px solid var(--color-border);
+    border-bottom: none;
+  }
+}
