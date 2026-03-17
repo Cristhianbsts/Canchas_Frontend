@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import CardProduct from '../components/CardProduct'
 import "../css/viewsCSS/EcommerceView.css"
 import Pagination from '../components/Pagination'
-import Navbar from '../components/layouts/Navbar'
 
 export default function EcommerceView() {
   const [products, setProducts] = useState([])
@@ -52,7 +51,7 @@ export default function EcommerceView() {
 
   const productosFiltrados = useMemo(() => {
     const busquedaNormalizada = normalizarTexto(search)
-    
+
 
     return products
       .filter((product) => {
@@ -122,7 +121,7 @@ export default function EcommerceView() {
   return (
     <div>
       <div className="container-fluid p-0">
-        <Navbar />
+
 
         <section className="hero-section d-flex flex-column justify-content-center align-items-center text-center">
           <h1 className="display-3 fw-bold">Tienda oficial</h1>

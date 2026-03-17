@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ModalRegistro from "../ModalRegistro";
 import "../../css/navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import { logOut } from "../../helpers/logout";
 
 const Navbar = () => {
 
   const [mostrarModal, setMostrarModal] = useState(false);
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
 
-  // 🔥 simulación usuario logueado
-  // después esto viene de context o backend
-  const [user, setUser] = useState(null);
+  const { user, clearUserData } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setUser(null);
-    setMostrarDropdown(false);
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      clearUserData();
+      setMostrarDropdown(false);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
   };
 
   return (
@@ -31,19 +38,27 @@ const Navbar = () => {
             </li>
 
             <li className="nav-item-custom">
-              <Link to="/reservas" className="nav-link-custom">
+              <Link to="/fields" className="nav-link-custom">
                 <i className="bi bi-calendar-event"></i>
                 <span>Reservas</span>
               </Link>
             </li>
 
             <li className="nav-item-custom">
-              <Link to="/tienda" className="nav-link-custom">
+              <Link to="/ecommerce" className="nav-link-custom">
                 <i className="bi bi-bag-check"></i>
                 <span>Tienda</span>
               </Link>
             </li>
 
+            {user?.role === "admin" && (
+              <li className="nav-item-custom">
+                <Link to="/admin" className="nav-link-custom">
+                  <i className="bi bi-bag-check"></i>
+                  <span>Administracion</span>
+                </Link>
+              </li>
+            )}
             {/* ✅ PERFIL DROPDOWN */}
             <li className="nav-item-custom position-relative">
 

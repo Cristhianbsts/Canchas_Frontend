@@ -14,7 +14,7 @@ const HomeScreen = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        fetch('https://localhost:1111/api/products')
+        fetch('http://localhost:3002/api/products')
             .then(res => res.json())
             .then(data => setProductos(data));
     }, []);

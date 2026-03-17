@@ -1,4 +1,4 @@
-const url = "http://localhost:2500/api/login"
+const url = "http://localhost:3002/api/login"
 
 
 
@@ -24,7 +24,7 @@ const getProfile = async () => {
     },
     credentials: "include",
   });
-  
+
   const data = await response.json();
   return { ok: response.ok, data };
 };
