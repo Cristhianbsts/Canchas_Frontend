@@ -1,34 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { getProfile } from "../helpers/auth";
 
 const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    role: "",
-  });
+  const [user, setUser] = useState(null);
 
   const loadUserData = async () => {
     try {
-      const response = await fetch("http://localhost:2500/api/auth/profile", {
-        credentials: "include", 
-      });
-      if (response.ok) {
-        const { data } = await response.json();
-        setUser({
-          username: data.username,
-          email: data.email,
-          role: data.role,
-        });
+      const response = await getProfile();
+      if (response.ok && response.data) {
+        setUser(response.data.usuario || response.data.user || response.data.data || response.data);
       } else {
-        setUser(null); 
+        setUser(null);
       }
     } catch (error) {
-      console.error("Error al cargar datos de usuario:", error);
+      console.error("Error al cargar perfil:", error);
       setUser(null);
     }
   };
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
 
   const clearUserData = () => {
     setUser(null);

@@ -16,4 +16,17 @@ const logIn = async (email, password) => {
   return data;
 };
 
-export { logIn };
+const getProfile = async () => {
+  const response = await fetch(`${url}/profile`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  
+  const data = await response.json();
+  return { ok: response.ok, data };
+};
+
+export { logIn, getProfile };

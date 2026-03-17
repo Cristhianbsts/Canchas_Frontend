@@ -21,9 +21,10 @@ export const CartProvider = ({ children }) => {
         name: item.product?.name,
         description: item.product?.description || "",
         image: item.product?.image || "/img/product-placeholder.jpg",
-        price: item.price,
+        price: item.product?.price || item.price || 0,
         quantity: item.quantity,
-        subtotal: item.subtotal,
+        subtotal: item.subtotal || ((item.product?.price || item.price || 0) * item.quantity),
+        product: item.product, 
         stock: item.product?.stock || 0,
         category: item.product?.category || null,
       })) || [];

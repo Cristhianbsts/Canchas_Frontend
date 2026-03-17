@@ -8,10 +8,16 @@ import ModalRegistro from '../components/ModalRegistro';
 import EcommerceView from '../views/EcommerceView';
 //import ProductDetailView from "../views/ProductDetailView";
 import PagesLayout from '../layout/PagesLayout';
+import ProductDetailView from "../views/ProductDetailView";
+
+import { ProtectedRoute } from './ProtectedRoute';
+import Fields from "../views/public/Fields"
+
 
 export const AppRouter = () => {
   return (
     <Routes>
+      {/* <Route element={<PagesLayout />}> */}
 
       <Route element={<PagesLayout />}>
         <Route path="/" element={<HomeScreen />} />
@@ -21,13 +27,22 @@ export const AppRouter = () => {
       </Route>
 
 
-     
+      {/* --- RUTAS PROTEGIDAS --- */}
+      <Route element={<ProtectedRoute adminOnly={true} />}>
+        <Route path="/admin/*" element={<AdminDashboard />} />
+      </Route>
 
-      <Route path="/admin/" element={<AdminDashboard />} /> 
 
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<ModalRegistro />} />
 
+      <Route path="/ecommerce" element={<EcommerceView />} />
+
+      <Route path="/producto/:id" element={<ProductDetailView />} />
+
+      <Route path="/fields" element={<Fields />} />
+
+      {/* </Route> */}
     </Routes>
   );
 };
