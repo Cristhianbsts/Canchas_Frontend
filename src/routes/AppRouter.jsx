@@ -7,13 +7,11 @@ import ModalRegistro from '../components/ModalRegistro';
 import CartView from '../views/CartView';
 import EcommerceView from '../views/EcommerceView';
 import ProductDetailView from "../views/ProductDetailView";
-<<<<<<< HEAD
+
 import { MainLayout } from '../layout/MainLayout';
 import { ProtectedRoute } from './ProtectedRoute';
-=======
 import Fields from "../views/public/Fields"
-import { MainLayout } from '../layout/MainLayout'; 
->>>>>>> bafb4118e03049b8207a1afb7526bf259e1d04eb
+
 
 export const AppRouter = () => {
   return (
@@ -32,16 +30,16 @@ export const AppRouter = () => {
       <Route element={<ProtectedRoute adminOnly={true} />}>
         <Route path="/admin/*" element={<AdminDashboard />} />
       </Route>
-      
-      
+
+
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<ModalRegistro />} />
 
-        <Route path="/ecommerce" element={<EcommerceView />} />
+      <Route path="/ecommerce" element={<EcommerceView />} />
 
-        <Route path="/producto/:id" element={<ProductDetailView />} />
+      <Route path="/producto/:id" element={<ProductDetailView />} />
 
-        <Route path="/fields" element={<Fields />} />
+      <Route path="/fields" element={<Fields />} />
 
       {/* </Route> */}
     </Routes>
