@@ -1,5 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 
+import AboutScreen from '../views/AboutScreen';
+import ContactScreen from '../views/ContactScreen';
+
 import { AdminDashboard } from '../views/AdminDashboard';
 import LoginScreen from '../views/auth/LoginScreen';
 import HomeScreen from '../views/HomeScreen';
