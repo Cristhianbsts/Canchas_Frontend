@@ -8,7 +8,6 @@ export const ProtectedRoute = ({ adminOnly = false }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Check session on mount if user is null just to be safe
     const checkAuth = async () => {
       if (!user) {
         await loadUserData();
