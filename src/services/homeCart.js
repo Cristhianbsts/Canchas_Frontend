@@ -1,4 +1,4 @@
-const url = `${import.meta.env.VITE_API_URL}/api/cart`;
+const url = `${import.meta.env.VITE_API_URL}/cart`;
 
 const fetchConfig = (method, body = null) => {
     const options = {
@@ -6,7 +6,7 @@ const fetchConfig = (method, body = null) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        credentials: 'include', 
+        credentials: 'include',
     };
     if (body) options.body = JSON.stringify(body);
     return options;
