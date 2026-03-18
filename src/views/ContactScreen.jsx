@@ -2,10 +2,17 @@ import "../css/contact.css";
 import "font-awesome/css/font-awesome.min.css";
 
 const ContactScreen = () => {
-    const URL_API = `${import.meta.env.VITE_API_URL}/contact`;
+    const API_URL = import.meta.env.VITE_API_URL;
+    const URL_API = API_URL ? `${API_URL}/contact` : "";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!API_URL) {
+            alert("La URL de la API no está configurada.");
+            console.error("VITE_API_URL es undefined");
+            return;
+        }
 
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
@@ -19,22 +26,12 @@ const ContactScreen = () => {
                 body: JSON.stringify(data),
             });
 
-            // Leemos como texto primero para evitar que rompa si viene vacío
             const text = await response.text();
             const result = text ? JSON.parse(text) : {};
 
             if (!response.ok) {
-                console.log("Respuesta de error:", result);
-
-                // Si el backend manda errores de validación
-                if (result.errores && Array.isArray(result.errores)) {
-                    alert(result.errores.map((err) => err.msg).join("\n"));
-                } else if (result.message) {
-                    alert(result.message);
-                } else {
-                    alert("Ocurrió un error al enviar el mensaje.");
-                }
-
+                console.log("Error del backend:", result);
+                alert(result.message || "Ocurrió un error al enviar el mensaje.");
                 return;
             }
 
@@ -114,21 +111,9 @@ const ContactScreen = () => {
                     </div>
 
                     <button className="smt" type="submit">
-                        Enviar mensaje{" "}
-                        <i className="fa fa-envelope-o" aria-hidden="true"></i>
+                        Enviar mensaje <i className="fa fa-envelope-o" aria-hidden="true"></i>
                     </button>
                 </form>
-
-                <div className="map">
-                    <h4>¡Ven a las mejores canchas del país!</h4>
-                    <iframe
-                        className="iframe"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.105917472264!2d-65.20974192440858!3d-26.83658327669264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d3ad7f30f1d%3A0xf8606cd659b8e3e4!2sRollingCode%20School!5e0!3m2!1ses-419!2sar!4v1773194088692!5m2!1ses-419!2sar"
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
-                </div>
             </section>
         </main>
     );
