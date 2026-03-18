@@ -1,0 +1,167 @@
+h1 {
+    font-size: 50px;
+    color: var(--color-title);
+    text-align: center;
+    padding-top: 30px;
+}
+
+.description {
+    color: var(--color-text-secondary);
+}
+
+.contact-main {
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.container1 {
+    margin-bottom: 20px;
+}
+
+.talk {
+    font-size: 30px;
+    margin: 15px;
+    color: var(--color-title);
+}
+
+.send-msg {
+    font-size: 24px;
+    margin: 15px;
+    color: var(--color-title);
+}
+
+.contact_info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.contact_info p {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.contact-form {
+    background-color: #ffffff;
+    outline: 4px solid var(--color-primary);
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.cont-input,
+.cont-textarea {
+    width: 100%;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+}
+
+.cont-textarea {
+    height: 200px;
+    resize: none;
+}
+
+.cont-input:focus,
+.cont-textarea:focus {
+    outline-color: var(--color-primary);
+}
+
+.smt {
+    background-color: var(--color-primary);
+    color: #f9f9f9;
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    padding: 15px;
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.smt:hover {
+    background-color: #f9f9f9;
+    color: var(--color-primary);
+    outline: 2px solid var(--color-primary);
+    cursor: pointer;
+}
+
+.map {
+    margin: 0 40px;
+}
+
+.map h4 {
+    margin-bottom: 20px;
+    color: var(--color-title);
+}
+
+.iframe {
+    width: 80%;
+    height: 450px;
+    border: 0;
+    margin: 0 auto;
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+
+    h1 {
+        font-size: 32px;
+        padding-top: 20px;
+    }
+
+    .talk {
+        font-size: 24px;
+    }
+
+    .send-msg {
+        font-size: 20px;
+    }
+
+    .contact_info {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .contact-form {
+        margin: 20px 5%;
+        padding: 15px;
+    }
+
+    .cont-input,
+    .cont-textarea {
+        width: 100%;
+    }
+
+    .smt {
+        width: 100%;
+        max-width: none;
+    }
+
+    .iframe {
+        width: 95%;
+        height: 300px;
+    }
+}

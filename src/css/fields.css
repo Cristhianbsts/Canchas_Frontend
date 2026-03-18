@@ -1,0 +1,13 @@
+.section-fields{
+  position: relative;
+  margin-top: -30px;  
+  z-index: 10;
+  background-color: var(--color-card);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding-bottom: 40px;
+}
+.title{
+    color: var(--color-title);
+    font-weight: var(--font-weight-title);
+}

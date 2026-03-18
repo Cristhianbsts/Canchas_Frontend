@@ -1,0 +1,35 @@
+.custom-pagination .page-item {
+    margin: 0 5px; /* Separación entre botones */
+}
+
+.custom-pagination .page-link {
+    border-radius: 50% !important; /* Los hace circulares */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+/* Estado Activo */
+.custom-pagination .page-item.active .page-link {
+    background-color: #000; /* Negro para combinar con tus botones de agregar */
+    border-color: #000;
+    color: #fff;
+}
+
+/* Estado Hover */
+.custom-pagination .page-link:hover:not(.active) {
+    background-color: #f8f9fa;
+    color: #000;
+    border-color: #adb5bd;
+}
+
+/* Estado Deshabilitado */
+.custom-pagination .page-item.disabled .page-link {
+    color: #dee2e6;
+    background-color: transparent;
+}
