@@ -1,13 +1,15 @@
 import "../css/contact.css"
 import 'font-awesome/css/font-awesome.min.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://canchasbackend.vercel.app/api';
+
 const ContactScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
+            const response = await fetch(`${API_URL}/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
