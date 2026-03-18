@@ -1,4 +1,4 @@
-const url = "http://localhost:3002/api/logout";
+const url = "http://localhost:2500/api/logout";
 
 const logOut = async () => {
   const response = await fetch(url, {

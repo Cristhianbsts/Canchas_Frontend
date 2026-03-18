@@ -7,7 +7,7 @@ const ContactScreen = () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
         try {
-            const response = await fetch('http://localhost:3002/api/contact', {
+            const response = await fetch('http://localhost:2500/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const ContactScreen = () => {
                     <p><strong>Dirección:</strong> Gral. José María Paz 576</p>
                 </div>
                 <h3 className="send-msg">Envíenos un Mensaje</h3>
-                <form className="contact-form" onSubmit={handleSubmit} action="http://localhost:1111/api/contact/" method="POST">
+                <form className="contact-form" onSubmit={handleSubmit} action="http://localhost:2500/api/contact/" method="POST">
                     <div className="form-div">
                         <label className="label" for="nombre">Nombre *</label>
                         <input className="cont-input" placeholder="Nombre Completo" type="text" id="nombre" name="nombre" required />

@@ -30,13 +30,14 @@ export const AppRouter = () => {
 
 
         {/* --- RUTAS PROTEGIDAS (Solo Admin) --- */}
-        <Route element={<ProtectedRoute adminOnly={true} />}>
+        <Route element={<ProtectedRoute adminOnly={false} />}>
           <Route path="/admin/*" element={<AdminDashboard />} />
           <Route path="/cart" element={<CartView />} />
-          <Route path="/ecommerce" element={<EcommerceView />} />
+          {/* <Route path="/ecommerce" element={<EcommerceView />} />
           <Route path="/producto/:id" element={<ProductDetailView />} />
-          <Route path="/fields" element={<Fields />} />
+          <Route path="/fields" element={<Fields />} /> */}
         </Route>
+        
 
         {/* --- RUTAS PROTEGIDAS (Cualquier usuario logueado) --- */}
         <Route element={<ProtectedRoute adminOnly={false} />}>
@@ -45,6 +46,12 @@ export const AppRouter = () => {
           <Route path="/producto/:id" element={<ProductDetailView />} />
           <Route path="/fields" element={<Fields />} />
         </Route>
+
+
+         <Route path="/cart" element={<CartView />} />
+          <Route path="/ecommerce" element={<EcommerceView />} />
+          <Route path="/producto/:id" element={<ProductDetailView />} />
+          <Route path="/fields" element={<Fields />} />
 
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<ModalRegistro />} />

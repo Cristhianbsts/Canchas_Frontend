@@ -52,16 +52,16 @@
 }
 
 /* Ajuste de padding para el body para que el contenido no quede tapado */
-/* body {
-    padding-bottom: 70px; 
-} */
+body {
+    padding-bottom: 100px; 
+} 
 
-/* @media (min-width: 992px) {
+ @media (min-width: 992px) {
     body {
         padding-bottom: 0;
-        padding-top: 70px; 
+        padding-top: 100px; 
     }
-} */
+} 
 
 
 

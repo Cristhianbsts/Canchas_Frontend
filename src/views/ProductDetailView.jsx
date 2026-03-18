@@ -18,7 +18,7 @@ const ProductDetailView = () => {
       return image;
     }
 
-    return `http://localhost:3002${image.startsWith("/") ? image : `/${image}`}`;
+    return `http://localhost:2500${image.startsWith("/") ? image : `/${image}`}`;
   };
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ProductDetailView = () => {
         setLoadingProduct(true);
         setErrorProduct("");
 
-        const response = await fetch("http://localhost:3002/api/products");
+        const response = await fetch("http://localhost:2500/api/products");
         const data = await response.json();
 
         if (!response.ok) {

@@ -26,7 +26,7 @@ export default function EcommerceView() {
         setLoading(true)
         setError("")
 
-        const response = await fetch("http://localhost:3002/api/products")
+        const response = await fetch("http://localhost:2500/api/products")
         const data = await response.json()
 
         if (!response.ok) {

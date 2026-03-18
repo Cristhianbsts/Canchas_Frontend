@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getProfile } from "../helpers/auth";
+import { getProfile } from "../helpers/auth.js";
 
 const UserContext = createContext(null);
 

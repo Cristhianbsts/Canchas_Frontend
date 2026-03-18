@@ -39,7 +39,7 @@ const ListCardField = () => {
 
   return (
     <div className="container px-4">
-      <div className="row">
+      <div className="row col-12">
         {fields.length === 0 ? (
           <p>No hay canchas disponibles</p>
         ) : (

@@ -60,7 +60,7 @@
     animation: fadeIn 1.5s ease-out;
 }
 
-.main-text .title {
+.main-text .home-title {
     font-size: 30px;
     margin: 0;
     line-height: 1.1;
@@ -74,14 +74,14 @@
     opacity: 0.9;
 }
 
-.badges {
+.home-badges {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 30px 0;
 }
 
-.badge {
+.home-badge {
     background: #e6f4ea;
     color: #0d2e16;
     padding: 8px 20px;
@@ -140,7 +140,7 @@
     width: 100%;
 }
 
-.tag {
+.home-tag {
     background-color: #EBF7EB;
     color: var(--color-title);
     font-size: 10px;
@@ -185,9 +185,9 @@
     aspect-ratio: 16 / 9;
 }
 
-.small {
+/* .small {
     aspect-ratio: 1 / 0.7;
-}
+} */
 
 .personal-cont {
     background-color: #e0e0e0;
@@ -329,11 +329,12 @@
 
 @media screen and (min-width: 768px) {
 
-    .main-text .title {
+
+    .main-text .home-title {
         font-size: 70px;
     }
 
-    .tag {
+    .home-tag {
         font-size: 15px;
     }
 
@@ -386,7 +387,7 @@
         font-size: 90px;
     }
 
-    .tag {
+    .home-tag {
         font-size: 20px;
     }
 
@@ -403,3 +404,5 @@
     }
 
 }
+
+

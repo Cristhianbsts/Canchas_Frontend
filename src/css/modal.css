@@ -66,6 +66,7 @@
     overflow-y: auto;
 
     animation: slideUp 0.35s ease;
+    bottom: 100px;
 }
 
 
@@ -162,6 +163,9 @@
         max-width: 700px;
         border-radius: 20px;
     }
+    .reserve-modal{
+        bottom:0;
+    }
 
 }
 
@@ -172,6 +176,7 @@
     .reserve-modal {
         max-width: 900px;
         padding: 30px;
+         bottom:0;
     }
 
 }

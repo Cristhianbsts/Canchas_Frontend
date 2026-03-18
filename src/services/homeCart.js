@@ -1,4 +1,4 @@
-const url = 'http://localhost:3002/api/cart';
+const url = 'http://localhost:2500/api/cart';
 
 const fetchConfig = (method, body = null) => {
     const options = {

@@ -1,4 +1,4 @@
-const url = "http://localhost:3002/api/fields";
+const url = "http://localhost:2500/api/fields";
 
 const getField = async () => {
   try {

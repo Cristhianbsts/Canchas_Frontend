@@ -24,6 +24,7 @@ const Navbar = () => {
     }
   };
 
+  console.log(user)
   return (
     <>
       <nav className="navbar-custom">
@@ -38,27 +39,38 @@ const Navbar = () => {
             </li>
 
             <li className="nav-item-custom">
-              <Link to="/fields" className="nav-link-custom">
+              <Link to="/fields#" className="nav-link-custom">
                 <i className="bi bi-calendar-event"></i>
                 <span>Reservas</span>
               </Link>
             </li>
 
             <li className="nav-item-custom">
-              <Link to="/ecommerce" className="nav-link-custom">
+              <Link to="/ecommerce#" className="nav-link-custom">
                 <i className="bi bi-bag-check"></i>
                 <span>Tienda</span>
               </Link>
             </li>
 
-            {user?.role === "admin" && (
-              <li className="nav-item-custom">
-                <Link to="/admin" className="nav-link-custom">
-                  <i className="bi bi-bag-check"></i>
-                  <span>Administracion</span>
-                </Link>
-              </li>
-            )}
+           
+                 {user && user.role === 'admin' && (
+                   <li className="nav-item-custom">
+                     <Link to="/admin" className="nav-link-custom">
+                       <i className="bi bi-columns-gap"></i>
+                       <span>Administración</span>
+                     </Link>
+                   </li>
+                 )}
+                 
+                 
+                 {user && user.role !== 'admin' && (
+                   <li className="nav-item-custom">
+                     <Link to="/cart" className="nav-link-custom">
+                       <i className="bi bi-cart"></i>
+                       <span>Carrito</span>
+                     </Link>
+                   </li>
+                 )}
             {/* ✅ PERFIL DROPDOWN */}
             <li className="nav-item-custom position-relative">
 

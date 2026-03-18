@@ -14,7 +14,7 @@ const HomeScreen = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3002/api/products')
+        fetch('http://localhost:2500/api/products')
             .then(res => res.json())
             .then(data => setProductos(data));
     }, []);
@@ -26,12 +26,12 @@ const HomeScreen = () => {
                     <img src={principalImg} alt="Canchas de Futbol 5" className="zoom-image" />
                     <div className="overlay-content">
                         <div className="main-text">
-                            <h1 className="title">Viví el fútbol como se debe</h1>
-                            <p className="subtitle">Armá el equipo, entrá a la cancha y disfrutá cada partido</p>
+                            <h1 className="home-title">Viví el fútbol como se debe</h1>
+                            {/* <p className="subtitle">Armá el equipo, entrá a la cancha y disfrutá cada partido</p> */}
                         </div>
-                        <div className="badges">
-                            <span className="badge">Abierto 19:00 a 00:00</span>
-                            <span className="badge">Estacionamiento - Parrilla - Vestuarios</span>
+                        <div className="home-badges">
+                            <span className="home-badge">Abierto 19:00 a 00:00</span>
+                            <span className="home-badge">Estacionamiento - Parrilla - Vestuarios</span>
                         </div>
                         <div className="info-grid">
                             <div className="glass-card">
@@ -50,7 +50,7 @@ const HomeScreen = () => {
                     </div>
                 </div>
                 <div className="info-content">
-                    <div className="tag"><i className="fa fa-calendar-o" aria-hidden="true"></i> Reserva en segundos</div>
+                    <div className="home-tag"><i className="fa fa-calendar-o" aria-hidden="true"></i> Reserva en segundos</div>
                     <h2 className="main-title">Tu proximo partido ya tiene cancha.</h2>
                     <p className="slogan">El complejo elegido por los verdaderos jugadores.</p>
                     <div className="mega-div">
@@ -77,9 +77,11 @@ const HomeScreen = () => {
                         </div>
                     </div>
                     </div>
-                    <button className="availability-btn">
+                    <Link to="/fields#" >
+                       <button className="availability-btn">
                         Ver disponibilidad <i className="fa fa-calendar-o" aria-hidden="true"></i>
-                    </button>
+                       </button>
+                    </Link>
                 </div>
             </section>
             <section className="ads">
@@ -129,7 +131,7 @@ const HomeScreen = () => {
                 <h2 className="market-h2">Productos Sugeridos</h2>
                 <p className="market-p">Equipate antes de entrar a la cancha</p>
                 <HomeCardList/>
-                <Link to="/products">
+                <Link to="/ecommerce#">
                     <button className="availability-btn">
                         Ver más productos <i className="fa fa-calendar-o" aria-hidden="true"></i>
                     </button>

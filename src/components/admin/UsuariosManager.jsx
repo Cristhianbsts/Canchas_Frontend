@@ -35,7 +35,7 @@ export const UsuariosManager = () => {
     if (!confirmar) return;
 
     const endpoint = isActive ? 'suspend' : 'activate';
-    const url = `http://localhost:3002/api/users/${id}/${endpoint}`;
+    const url = `http://localhost:2500/api/users/${id}/${endpoint}`;
 
     try {
       const response = await fetch(url, {
