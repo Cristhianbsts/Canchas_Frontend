@@ -1,5 +1,4 @@
-const BASE_URL = `${import.meta.env.VITE_API_URL}`;
-const url = `${BASE_URL}/login`;
+const url = `${import.meta.env.VITE_API_URL}/login`
 
 
 const logIn = async (email, password) => {
@@ -17,7 +16,7 @@ const logIn = async (email, password) => {
 };
 
 const getProfile = async () => {
-  const response = await fetch(`${BASE_URL}/profile`, {
+  const response = await fetch(`${url}/profile`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

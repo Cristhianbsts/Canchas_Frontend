@@ -20,12 +20,13 @@ const ModalRegistro = ({ isOpen, onClose }) => {
      
        try {
      
+          const { repeatpassword, terminos, ...submitData } = data;
           const res =   await fetch(`${import.meta.env.VITE_API_URL}/register`, {
              method: 'POST',
              headers: {
                  'Content-Type': 'application/json',
              },
-             body: JSON.stringify(data),
+             body: JSON.stringify(submitData),
            });
           const  response = await res.json();
      
