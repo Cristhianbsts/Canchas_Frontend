@@ -4,15 +4,15 @@ export const UsuariosManager = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
- 
+
   const obtenerUsuarios = async () => {
     try {
-      const response = await fetch('http://localhost:3002/api/users', { 
-        credentials: 'include' 
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+        credentials: 'include'
       });
-      
+
       const data = await response.json();
-      
+
       if (data.ok) {
         setUsuarios(data.users);
       }
@@ -31,11 +31,11 @@ export const UsuariosManager = () => {
   const cambiarEstado = async (id, isActive, username) => {
     const accion = isActive ? 'suspender' : 'activar';
     const confirmar = window.confirm(`¿Estás seguro que deseas ${accion} al usuario ${username}?`);
-    
+
     if (!confirmar) return;
 
     const endpoint = isActive ? 'suspend' : 'activate';
-    const url = `${import.meta.env.VITE_URL}/users/${id}/${endpoint}`;
+    const url = `${import.meta.env.VITE_API_URL}/users/${id}/${endpoint}`;
 
     try {
       const response = await fetch(url, {
@@ -43,11 +43,11 @@ export const UsuariosManager = () => {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
       });
-      
+
       const data = await response.json();
-      
+
       if (data.ok) {
-        obtenerUsuarios(); 
+        obtenerUsuarios();
       } else {
         alert("Error: " + data.message);
       }
@@ -58,7 +58,7 @@ export const UsuariosManager = () => {
 
   return (
     <div>
-      
+
       <div className="mb-4">
         <h2 style={{ color: 'var(--color-title)', fontWeight: 'var(--font-weight-title)' }}>
           Gestión de Usuarios
@@ -67,8 +67,8 @@ export const UsuariosManager = () => {
           Administra los clientes registrados en la plataforma, sus estados y accesos.
         </p>
       </div>
-      
-    
+
+
       {loading ? (
         <div className="text-center py-5 bg-white rounded shadow-sm border" style={{ borderColor: 'var(--color-border)' }}>
           <div className="spinner-border text-success" role="status"></div>
@@ -82,16 +82,16 @@ export const UsuariosManager = () => {
       ) : (
         <div className="d-flex flex-column gap-3">
           {usuarios.map((usuario) => (
-            <div 
-              key={usuario._id} 
+            <div
+              key={usuario._id}
               className="bg-white p-3 rounded shadow-sm d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3"
               style={{ border: '1px solid var(--color-border)' }}
             >
-              
-             
+
+
               <div className="d-flex align-items-center gap-3 w-100" style={{ maxWidth: '300px' }}>
-                <div 
-                  className="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0 shadow-sm" 
+                <div
+                  className="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0 shadow-sm"
                   style={{ width: '45px', height: '45px', backgroundColor: 'var(--color-primary)', fontWeight: 'bold', fontSize: '1.2rem' }}
                 >
                   {usuario.username ? usuario.username.charAt(0).toUpperCase() : 'U'}
@@ -111,7 +111,7 @@ export const UsuariosManager = () => {
               </div>
 
               <div className="d-flex align-items-center justify-content-between w-100 mt-2 mt-md-0 gap-3" style={{ flex: 1 }}>
-                
+
                 <div>
                   {usuario.active !== false ? (
                     <span className="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 rounded-pill">
@@ -124,17 +124,17 @@ export const UsuariosManager = () => {
                   )}
                 </div>
 
-               
+
                 <div className="d-flex justify-content-end">
                   {usuario.active !== false ? (
-                    <button 
+                    <button
                       onClick={() => cambiarEstado(usuario._id, true, usuario.username)}
                       className="btn btn-sm btn-outline-danger fw-medium px-3 d-flex align-items-center gap-2"
                     >
                       <i className="bi bi-person-x"></i> Suspender
                     </button>
                   ) : (
-                    <button 
+                    <button
                       onClick={() => cambiarEstado(usuario._id, false, usuario.username)}
                       className="btn btn-sm btn-outline-success fw-medium px-3 d-flex align-items-center gap-2"
                     >

@@ -8,20 +8,20 @@ export const TiendaManager = () => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   const [mostrarModalProd, setMostrarModalProd] = useState(false);
   const [mostrarModalCat, setMostrarModalCat] = useState(false);
   const [editandoId, setEditandoId] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  const [formProd, setFormProd] = useState({ 
-    name: '', 
-    price: '', 
-    stock: '', 
-    category: '', 
-    description: '', 
-    active: true, 
-    imageFile: null 
+  const [formProd, setFormProd] = useState({
+    name: '',
+    price: '',
+    stock: '',
+    category: '',
+    description: '',
+    active: true,
+    imageFile: null
   });
   const [formCat, setFormCat] = useState({ name: '' });
 
@@ -29,8 +29,8 @@ export const TiendaManager = () => {
     setLoading(true);
     try {
       const [resProd, resCat] = await Promise.all([
-        fetch(`${import.meta.env.VITE_URL}/products`, { credentials: 'include' }),
-        fetch(`${import.meta.env.VITE_URL}/categories`, { credentials: 'include' })
+        fetch(`${import.meta.env.VITE_API_URL}/products`, { credentials: 'include' }),
+        fetch(`${import.meta.env.VITE_API_URL}/categories`, { credentials: 'include' })
       ]);
       const dataProd = await resProd.json();
       const dataCat = await resCat.json();
@@ -62,25 +62,25 @@ export const TiendaManager = () => {
     data.append('category', formProd.category);
     data.append('description', formProd.description);
     data.append('active', formProd.active);
-    
+
     // Si hay un archivo nuevo, se envía como 'archivo' 
     if (formProd.imageFile) {
       data.append('archivo', formProd.imageFile);
     }
 
-    const url = editandoId ? `${import.meta.env.VITE_URL}/products/${editandoId}` : `${import.meta.env.VITE_URL}/products`;
+    const url = editandoId ? `${import.meta.env.VITE_API_URL}/products/${editandoId}` : `${import.meta.env.VITE_API_URL}/products`;
     const method = editandoId ? 'PATCH' : 'POST';
 
     try {
       const response = await fetch(url, { method, body: data, credentials: 'include' });
       const res = await response.json();
-      if (res.ok) { 
-        setMostrarModalProd(false); 
+      if (res.ok) {
+        setMostrarModalProd(false);
         setEditandoId(null);
-        setPreview(null); 
-        cargarDatos(); 
-      } else { 
-        alert(res.message); 
+        setPreview(null);
+        cargarDatos();
+      } else {
+        alert(res.message);
       }
     } catch (error) {
       console.error("Error al guardar producto:", error);
@@ -89,9 +89,9 @@ export const TiendaManager = () => {
 
   const guardarCategoria = async (e) => {
     e.preventDefault();
-    const url = editandoId ? `${import.meta.env.VITE_URL}/categories/${editandoId}` : `${import.meta.env.VITE_URL}/categories`;
+    const url = editandoId ? `${import.meta.env.VITE_API_URL}/categories/${editandoId}` : `${import.meta.env.VITE_API_URL}/categories`;
     const method = editandoId ? 'PATCH' : 'POST';
-    
+
     try {
       const response = await fetch(url, {
         method,
@@ -100,10 +100,10 @@ export const TiendaManager = () => {
         credentials: 'include'
       });
       const res = await response.json();
-      if (res.ok) { 
-        setMostrarModalCat(false); 
-        setEditandoId(null); 
-        cargarDatos(); 
+      if (res.ok) {
+        setMostrarModalCat(false);
+        setEditandoId(null);
+        cargarDatos();
       } else {
         alert(res.message);
       }
@@ -132,7 +132,7 @@ export const TiendaManager = () => {
           <h2 className="m-0 fw-bold" style={{ color: 'var(--color-title)' }}>Tienda</h2>
           <p className="text-muted mb-0">Gestión de inventario y clasificación</p>
         </div>
-        <button 
+        <button
           onClick={() => {
             setEditandoId(null);
             if (tabActiva === 'productos') {
@@ -144,7 +144,7 @@ export const TiendaManager = () => {
               setMostrarModalCat(true);
             }
           }}
-          className="btn text-white shadow-sm d-flex align-items-center gap-2" 
+          className="btn text-white shadow-sm d-flex align-items-center gap-2"
           style={{ backgroundColor: 'var(--color-primary)' }}
         >
           <i className="bi bi-plus-lg"></i> Nuevo {tabActiva === 'productos' ? 'Producto' : 'Categoría'}
@@ -154,14 +154,14 @@ export const TiendaManager = () => {
       {/* TABS */}
       <ul className="nav nav-tabs mb-4 border-bottom">
         <li className="nav-item">
-          <button className={`nav-link border-0 ${tabActiva === 'productos' ? 'active fw-bold' : 'text-muted'}`} 
+          <button className={`nav-link border-0 ${tabActiva === 'productos' ? 'active fw-bold' : 'text-muted'}`}
             onClick={() => setTabActiva('productos')}
             style={tabActiva === 'productos' ? { borderBottom: '3px solid var(--color-primary)', color: 'var(--color-primary)', borderRadius: 0 } : {}}>
             Productos ({productos.length})
           </button>
         </li>
         <li className="nav-item">
-          <button className={`nav-link border-0 ${tabActiva === 'categorias' ? 'active fw-bold' : 'text-muted'}`} 
+          <button className={`nav-link border-0 ${tabActiva === 'categorias' ? 'active fw-bold' : 'text-muted'}`}
             onClick={() => setTabActiva('categorias')}
             style={tabActiva === 'categorias' ? { borderBottom: '3px solid var(--color-primary)', color: 'var(--color-primary)', borderRadius: 0 } : {}}>
             Categorías ({categorias.length})
@@ -178,11 +178,11 @@ export const TiendaManager = () => {
             <div className="col-12 col-md-6 col-lg-4" key={p._id}>
               <div className={`card h-100 shadow-sm border-0 ${!p.active ? 'opacity-75' : ''}`}>
                 <div style={{ height: '200px', overflow: 'hidden' }} className="bg-light position-relative">
-                  <img 
-                    src={p.image || IMAGE_DEFAULT} 
-                    className="w-100 h-100" 
-                    style={{ objectFit: 'cover' }} 
-                    alt={p.name} 
+                  <img
+                    src={p.image || IMAGE_DEFAULT}
+                    className="w-100 h-100"
+                    style={{ objectFit: 'cover' }}
+                    alt={p.name}
                   />
                   <span className="badge position-absolute top-0 end-0 m-2" style={{ backgroundColor: 'var(--color-navbar)', color: 'var(--color-primary)' }}>
                     {p.category?.name || 'S/C'}
@@ -221,14 +221,14 @@ export const TiendaManager = () => {
                   <td className="px-4 fw-bold text-capitalize" style={{ color: 'var(--color-title)' }}>{c.name}</td>
                   <td className="text-end px-4">
                     <div className="d-flex justify-content-end gap-2 flex-nowrap">
-                      <button 
+                      <button
                         onClick={() => { setEditandoId(c._id); setFormCat({ name: c.name }); setMostrarModalCat(true); }}
                         className="btn btn-sm d-flex align-items-center gap-2 px-3 fw-medium"
                         style={{ backgroundColor: 'var(--color-navbar)', color: 'var(--color-primary)', border: 'none' }}
                       >
                         <i className="bi bi-pencil-square"></i> Editar
                       </button>
-                      <button 
+                      <button
                         onClick={() => borrarItem('cat', c._id, c.name)}
                         className="btn btn-sm btn-outline-danger d-flex align-items-center gap-2 px-3 fw-medium"
                       >
@@ -261,26 +261,26 @@ export const TiendaManager = () => {
               </div>
               <div className="col-12">
                 <label className="form-label small fw-bold text-muted">Nombre</label>
-                <input type="text" className="form-control text-uppercase fw-bold" value={formProd.name} onChange={e => setFormProd({...formProd, name: e.target.value})} required />
+                <input type="text" className="form-control text-uppercase fw-bold" value={formProd.name} onChange={e => setFormProd({ ...formProd, name: e.target.value })} required />
               </div>
               <div className="col-md-6">
                 <label className="form-label small fw-bold text-muted">Precio ($)</label>
-                <input type="number" className="form-control fw-bold" value={formProd.price} onChange={e => setFormProd({...formProd, price: e.target.value})} required />
+                <input type="number" className="form-control fw-bold" value={formProd.price} onChange={e => setFormProd({ ...formProd, price: e.target.value })} required />
               </div>
               <div className="col-md-6">
                 <label className="form-label small fw-bold text-muted">Stock Inicial</label>
-                <input type="number" className="form-control fw-bold" value={formProd.stock} onChange={e => setFormProd({...formProd, stock: e.target.value})} required />
+                <input type="number" className="form-control fw-bold" value={formProd.stock} onChange={e => setFormProd({ ...formProd, stock: e.target.value })} required />
               </div>
               <div className="col-12">
                 <label className="form-label small fw-bold text-muted">Categoría</label>
-                <select className="form-select" value={formProd.category} onChange={e => setFormProd({...formProd, category: e.target.value})} required>
+                <select className="form-select" value={formProd.category} onChange={e => setFormProd({ ...formProd, category: e.target.value })} required>
                   <option value="">Seleccione una categoría...</option>
                   {categorias.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                 </select>
               </div>
               <div className="col-12">
                 <label className="form-label small fw-bold text-muted">Descripción Corta</label>
-                <textarea className="form-control" rows="2" value={formProd.description} onChange={e => setFormProd({...formProd, description: e.target.value})} placeholder="Ej: Bebida isotónica 500ml"></textarea>
+                <textarea className="form-control" rows="2" value={formProd.description} onChange={e => setFormProd({ ...formProd, description: e.target.value })} placeholder="Ej: Bebida isotónica 500ml"></textarea>
               </div>
               <div className="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
                 <button type="button" className="btn btn-light px-4" onClick={() => setMostrarModalProd(false)}>Cancelar</button>
@@ -299,7 +299,7 @@ export const TiendaManager = () => {
             <form onSubmit={guardarCategoria}>
               <div className="mb-4">
                 <label className="form-label small fw-bold text-muted">Nombre de la Categoría</label>
-                <input type="text" className="form-control fw-bold text-uppercase" value={formCat.name} onChange={e => setFormCat({name: e.target.value})} required placeholder="Ej: BEBIDAS" />
+                <input type="text" className="form-control fw-bold text-uppercase" value={formCat.name} onChange={e => setFormCat({ name: e.target.value })} required placeholder="Ej: BEBIDAS" />
               </div>
               <div className="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
                 <button type="button" className="btn btn-light px-4" onClick={() => setMostrarModalCat(false)}>Cancelar</button>

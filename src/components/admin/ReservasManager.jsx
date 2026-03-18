@@ -5,7 +5,7 @@ export const ReservasManager = () => {
         Gestión de las reservas
       </h2>
       <p style={{ color: 'var(--color-text-secondary)' }}>Administra los horarios y disponibilidad.</p>
-      
+
       <div className="p-5 text-center bg-light rounded border">
         <h4>Aquí irán las tarjetas del CRUD de las reservas</h4>
       </div>

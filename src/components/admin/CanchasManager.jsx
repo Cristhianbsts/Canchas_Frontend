@@ -52,7 +52,11 @@ export const CanchasManager = () => {
     data.append('active', formData.active);
     if (formData.imageFile) data.append('archivo', formData.imageFile);
 
-    const url = editandoId ? `http://localhost:3002/api/fields/${editandoId}` : 'http://localhost:3002/api/fields';
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    const url = editandoId
+      ? `${API_URL}/fields/${editandoId}`
+      : `${API_URL}/fields`;
     const method = editandoId ? 'PUT' : 'POST';
 
     try {
@@ -81,7 +85,7 @@ export const CanchasManager = () => {
   };
 
   return (
-    
+
     <div className="position-relative">
       <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-3">
         <div>
@@ -140,11 +144,11 @@ export const CanchasManager = () => {
             <form onSubmit={guardarCancha}>
               <div className="mb-3">
                 <label className="form-label">Nombre</label>
-                <input type="text" className="form-control" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                <input type="text" className="form-control" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
               </div>
               <div className="mb-3">
                 <label className="form-label">Precio</label>
-                <input type="number" className="form-control" value={formData.pricePerHour} onChange={(e) => setFormData({...formData, pricePerHour: e.target.value})} required />
+                <input type="number" className="form-control" value={formData.pricePerHour} onChange={(e) => setFormData({ ...formData, pricePerHour: e.target.value })} required />
               </div>
               <div className="mb-3">
                 <label className="form-label">Foto</label>
@@ -153,7 +157,7 @@ export const CanchasManager = () => {
               </div>
               {editandoId && (
                 <div className="form-check form-switch mb-3">
-                  <input className="form-check-input" type="checkbox" checked={formData.active} onChange={(e) => setFormData({...formData, active: e.target.checked})} id="sw" />
+                  <input className="form-check-input" type="checkbox" checked={formData.active} onChange={(e) => setFormData({ ...formData, active: e.target.checked })} id="sw" />
                   <label className="form-check-label" htmlFor="sw">Cancha Activa</label>
                 </div>
               )}
