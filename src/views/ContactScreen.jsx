@@ -41,7 +41,7 @@ const ContactScreen = () => {
                     <p><strong>Dirección:</strong> Gral. José María Paz 576</p>
                 </div>
                 <h3 className="send-msg">Envíenos un Mensaje</h3>
-                <form className="contact-form" onSubmit={handleSubmit} action={`${import.meta.env.VITE_API_URL}/contact`} method="POST">
+                <form className="contact-form" onSubmit={handleSubmit}>
                     <div className="form-div">
                         <label className="label" for="nombre">Nombre *</label>
                         <input className="cont-input" placeholder="Nombre Completo" type="text" id="nombre" name="nombre" required />
