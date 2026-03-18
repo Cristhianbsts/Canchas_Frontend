@@ -33,7 +33,7 @@ export const ProtectedRoute = ({ adminOnly = false }) => {
   }
 
   // Si requiere ser admin y el usuario no lo es
-  if (adminOnly && user.role !== "admin") {
+  if (adminOnly && user.role !== "admin" && user.role !== "superadmin") {
     return <Navigate to="/" replace />;
   }
 

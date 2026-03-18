@@ -57,7 +57,7 @@ export const CanchasManager = () => {
     const url = editandoId
       ? `${API_URL}/fields/${editandoId}`
       : `${API_URL}/fields`;
-    const method = editandoId ? 'PUT' : 'POST';
+    const method = editandoId ? 'PATCH' : 'POST';
 
     try {
       const response = await fetch(url, { method, body: data, credentials: 'include' });
