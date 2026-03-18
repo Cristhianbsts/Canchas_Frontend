@@ -1,15 +1,14 @@
 import "../css/contact.css"
 import 'font-awesome/css/font-awesome.min.css';
 
-const API_URL = 'https://canchasbackend.vercel.app/api';
-
 const ContactScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
+        const URL_API = `${import.meta.env.VITE_API_URL}/contact`
         try {
-            const response = await fetch("https://canchasbackend.vercel.app/api/contact", {
+            const response = await fetch(`${URL_API}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +42,7 @@ const ContactScreen = () => {
                     <p><strong>Dirección:</strong> Gral. José María Paz 576</p>
                 </div>
                 <h3 className="send-msg">Envíenos un Mensaje</h3>
-                <form className="contact-form" onSubmit={handleSubmit} action="https://canchasbackend.vercel.app/api/contact" method="POST">
+                <form className="contact-form" onSubmit={handleSubmit} action={`${URL_API}`} method="POST">
                     <div className="form-div">
                         <label className="label" for="nombre">Nombre *</label>
                         <input className="cont-input" placeholder="Nombre Completo" type="text" id="nombre" name="nombre" required />
