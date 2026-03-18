@@ -20,7 +20,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
      
        try {
      
-          const res =   await fetch('http://localhost:2500/api/register', {
+          const res =   await fetch(`${import.meta.env.VITE_URL}/register`, {
              method: 'POST',
              headers: {
                  'Content-Type': 'application/json',

@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 import "../css/error.css"
 
 const ErrorScreen = () => {
@@ -6,9 +7,12 @@ const ErrorScreen = () => {
             <div className="err-card">
                 <h1>Error 404</h1>
                 <p>Página no encontrada 😭</p>
-                <button className="back-btn">
+                <Link to= '/'>
+                   <button className="back-btn">
                     Volver al inicio
-                </button>
+                   </button>
+                </Link>
+                
             </div>
         </main>
     )

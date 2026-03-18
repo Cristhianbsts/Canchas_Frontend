@@ -14,49 +14,35 @@ import ProductDetailView from "../views/ProductDetailView";
 
 import { ProtectedRoute } from './ProtectedRoute';
 import Fields from "../views/public/Fields"
+import ErrorScreen from '../views/errorScreen';
 
 
 export const AppRouter = () => {
   return (
-    <Routes>
-      {/* <Route element={<PagesLayout />}> */}
 
-      <Route element={<PagesLayout />}>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/about" element={<AboutScreen />} />
-        <Route path="/contact" element={<ContactScreen />} />
+<Routes>
+    <Route element={<PagesLayout />}>
+  <Route path="/" element={<HomeScreen />} />
+  <Route path="/about" element={<AboutScreen />} />
+  <Route path="/contact" element={<ContactScreen />} />
+  <Route path="/ecommerce" element={<EcommerceView />} />
+  <Route path="/fields" element={<Fields />} />
+  <Route path="/producto/:id" element={<ProductDetailView />} />
+  <Route path="/login" element={<LoginScreen />} />
+  <Route path="/register" element={<ModalRegistro />} />
+ 
 
+  
+  <Route element={<ProtectedRoute adminOnly={false} />}>
+    <Route path="/cart" element={<CartView />} />
+  </Route>
 
-
-
-        {/* --- RUTAS PROTEGIDAS (Solo Admin) --- */}
-        <Route element={<ProtectedRoute adminOnly={false} />}>
-          <Route path="/admin/*" element={<AdminDashboard />} />
-          <Route path="/cart" element={<CartView />} />
-          {/* <Route path="/ecommerce" element={<EcommerceView />} />
-          <Route path="/producto/:id" element={<ProductDetailView />} />
-          <Route path="/fields" element={<Fields />} /> */}
-        </Route>
-        
-
-        {/* --- RUTAS PROTEGIDAS (Cualquier usuario logueado) --- */}
-        <Route element={<ProtectedRoute adminOnly={false} />}>
-          <Route path="/cart" element={<CartView />} />
-          <Route path="/ecommerce" element={<EcommerceView />} />
-          <Route path="/producto/:id" element={<ProductDetailView />} />
-          <Route path="/fields" element={<Fields />} />
-        </Route>
-
-
-         <Route path="/cart" element={<CartView />} />
-          <Route path="/ecommerce" element={<EcommerceView />} />
-          <Route path="/producto/:id" element={<ProductDetailView />} />
-          <Route path="/fields" element={<Fields />} />
-
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/register" element={<ModalRegistro />} />
-
-      </Route>
-    </Routes>
+  
+  <Route element={<ProtectedRoute adminOnly={true} />}>
+    <Route path="/admin/" element={<AdminDashboard />} />
+  </Route>
+</Route>
+ <Route path='*' element = {<ErrorScreen/>}/>
+</Routes>
   );
 };

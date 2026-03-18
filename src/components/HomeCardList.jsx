@@ -8,7 +8,7 @@ const HomeCardList = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:2500/api/products?limit=8');
+            const response = await fetch(`${import.meta.env.VITE_URL}/products?limit=8`);
             const data = await response.json();
             setProducts(data.items);
             setLoading(false);

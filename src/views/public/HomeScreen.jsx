@@ -1,13 +1,14 @@
 import "../../css/home.css"
 import 'font-awesome/css/font-awesome.min.css';
 import estadioImg from "../../assets/estadio.webp"
-import principalImg from "../../assets/principal-img.webp"
+import principalImg from "../../assets/CANCHASVARIAS.webp"
 import ducha from "../../assets/ducha.webp"
 import refresco from "../../assets/refresco.webp"
 import { useState, useEffect } from "react";
 import HomeCardList from "../../components/HomeCardList";
 import "../../css/home-card.css"
 import { Link } from "react-router-dom";
+
 
 const HomeScreen = () => {
 

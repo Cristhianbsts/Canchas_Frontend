@@ -3,7 +3,7 @@ import { useCart } from "../hooks/useCart";
 import { createCartPaymentRequest } from "../services/paymentService";
 import "../css/cartView.css";
 
-const API_URL = "http://localhost:3002/api";
+const API_URL = `${import.meta.env.VITE_URL}`;
 
 const CartView = () => {
   const { items = [], clearCart, loadingCart } = useCart();
