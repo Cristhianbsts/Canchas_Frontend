@@ -4,6 +4,10 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "https://canchasbackend.vercel.app/api/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
