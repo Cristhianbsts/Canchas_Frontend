@@ -44,7 +44,7 @@
 
    
    .hero-section {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&q=80&w=2070');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/BORROSA.webp');
             background-size: cover;
             background-position: center;
             height: 60vh; /* Ajusta la altura a tu gusto */

@@ -3,6 +3,7 @@ import CardProduct from '../components/CardProduct'
 import "../css/viewsCSS/EcommerceView.css"
 import Pagination from '../components/Pagination'
 
+
 export default function EcommerceView() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -26,7 +27,7 @@ export default function EcommerceView() {
         setLoading(true)
         setError("")
 
-        const response = await fetch("http://localhost:2500/api/products")
+        const response = await fetch(`${import.meta.env.VITE_URL}/products`)
         const data = await response.json()
 
         if (!response.ok) {

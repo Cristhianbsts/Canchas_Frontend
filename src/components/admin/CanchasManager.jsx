@@ -10,7 +10,7 @@ export const CanchasManager = () => {
 
   const obtenerCanchas = async () => {
     try {
-      const response = await fetch('http://localhost:2500/api/fields', { credentials: 'include' });
+      const response = await fetch(`${import.meta.env.VITE_URL}/fields`, { credentials: 'include' });
       const data = await response.json();
       if (data.ok) setCanchas(data.fields);
     } catch (error) {

@@ -1,5 +1,4 @@
-const url = "http://localhost:2500/api/login"
-
+const url = `${import.meta.env.VITE_URL}/login`
 
 
 const logIn = async (email, password) => {

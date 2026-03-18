@@ -14,7 +14,7 @@ const HomeScreen = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:2500/api/products')
+        fetch(`${import.meta.env.VITE_URL}/products`)
             .then(res => res.json())
             .then(data => setProductos(data));
     }, []);
@@ -30,7 +30,7 @@ const HomeScreen = () => {
                             {/* <p className="subtitle">Armá el equipo, entrá a la cancha y disfrutá cada partido</p> */}
                         </div>
                         <div className="home-badges">
-                            <span className="home-badge">Abierto 19:00 a 00:00</span>
+                            <span className="home-badge">Abierto 18:00 a 00:00</span>
                             <span className="home-badge">Estacionamiento - Parrilla - Vestuarios</span>
                         </div>
                         <div className="info-grid">

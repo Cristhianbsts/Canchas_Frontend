@@ -27,7 +27,7 @@ const ProductDetailView = () => {
         setLoadingProduct(true);
         setErrorProduct("");
 
-        const response = await fetch("http://localhost:2500/api/products");
+        const response = await fetch(`${import.meta.env.VITE_URL}/products`);
         const data = await response.json();
 
         if (!response.ok) {

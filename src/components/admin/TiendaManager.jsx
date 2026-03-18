@@ -29,8 +29,8 @@ export const TiendaManager = () => {
     setLoading(true);
     try {
       const [resProd, resCat] = await Promise.all([
-        fetch('http://localhost:2500/api/products', { credentials: 'include' }),
-        fetch('http://localhost:2500/api/categories', { credentials: 'include' })
+        fetch(`${import.meta.env.VITE_URL}/products`, { credentials: 'include' }),
+        fetch(`${import.meta.env.VITE_URL}/categories`, { credentials: 'include' })
       ]);
       const dataProd = await resProd.json();
       const dataCat = await resCat.json();
@@ -68,7 +68,7 @@ export const TiendaManager = () => {
       data.append('archivo', formProd.imageFile);
     }
 
-    const url = editandoId ? `http://localhost:2500/api/products/${editandoId}` : 'http://localhost:2500/api/products';
+    const url = editandoId ? `${import.meta.env.VITE_URL}/products/${editandoId}` : `${import.meta.env.VITE_URL}/products`;
     const method = editandoId ? 'PATCH' : 'POST';
 
     try {
@@ -89,7 +89,7 @@ export const TiendaManager = () => {
 
   const guardarCategoria = async (e) => {
     e.preventDefault();
-    const url = editandoId ? `http://localhost:2500/api/categories/${editandoId}` : 'http://localhost:2500/api/categories';
+    const url = editandoId ? `${import.meta.env.VITE_URL}/categories/${editandoId}` : `${import.meta.env.VITE_URL}/categories`;
     const method = editandoId ? 'PATCH' : 'POST';
     
     try {
@@ -116,7 +116,7 @@ export const TiendaManager = () => {
     if (!window.confirm(`¿Seguro que deseas eliminar "${nombre}"?`)) return;
     const endpoint = tipo === 'prod' ? 'products' : 'categories';
     try {
-      const res = await fetch(`http://localhost:2500/api/${endpoint}/${id}`, { method: 'DELETE', credentials: 'include' });
+      const res = await fetch(`${import.meta.env.VITE_URL}/${endpoint}/${id}`, { method: 'DELETE', credentials: 'include' });
       const data = await res.json();
       if (data.ok) cargarDatos();
     } catch (error) {
