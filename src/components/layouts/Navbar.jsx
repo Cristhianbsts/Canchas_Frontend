@@ -87,12 +87,12 @@ const Navbar = () => {
             <li className="nav-item-custom position-relative">
 
               <div
-                className="nav-link-custom cursor-pointer"
+                className="nav-link-custom nav-link-profile cursor-pointer"
                 onClick={() => setMostrarDropdown(!mostrarDropdown)}
               >
                 <i className="bi bi-person"></i>
                 <span>Perfil</span>
-                <i className="bi bi-caret-down-fill ms-1"></i>
+                <i className="bi bi-caret-down-fill profile-caret"></i>
               </div>
 
               {mostrarDropdown && (

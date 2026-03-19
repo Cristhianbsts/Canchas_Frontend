@@ -45,6 +45,12 @@
   margin-bottom: 2px;
 }
 
+.nav-link-profile .profile-caret {
+  font-size: 0.95rem;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
 .nav-link-custom.active,
 .nav-link-custom:hover {
   color: var(--color-primary);
