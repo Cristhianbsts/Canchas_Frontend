@@ -14,6 +14,11 @@ export const CartProvider = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loadingCart, setLoadingCart] = useState(false);
 
+  const resetCartState = () => {
+    setItems([]);
+    setTotalPrice(0);
+  };
+
   const normalizeCart = (cart) => {
     const normalizedItems =
       cart?.items?.map((item) => ({
@@ -40,6 +45,7 @@ export const CartProvider = ({ children }) => {
       normalizeCart(data.cart);
     } catch (error) {
       console.error("Error cargando carrito:", error.message);
+      resetCartState();
     } finally {
       setLoadingCart(false);
     }
@@ -111,8 +117,7 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     try {
       await clearCartRequest();
-      setItems([]);
-      setTotalPrice(0);
+      resetCartState();
     } catch (error) {
       console.error("Error vaciando carrito:", error.message);
       alert(error.message);
@@ -131,6 +136,7 @@ export const CartProvider = ({ children }) => {
         decreaseItem,
         removeItem,
         clearCart,
+        resetCartState,
       }}
     >
       {children}

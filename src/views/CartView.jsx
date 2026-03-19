@@ -8,7 +8,7 @@ import "../css/cartView.css";
 const API_URL = `${import.meta.env.VITE_API_URL}`;
 
 const CartView = () => {
-  const { items = [], clearCart, loadingCart } = useCart();
+  const { items = [], clearCart, loadingCart, loadCart } = useCart();
 
   const [cartItems, setCartItems] = useState([]);
   const [loadingAction, setLoadingAction] = useState(false);
@@ -20,28 +20,6 @@ const CartView = () => {
   useEffect(() => {
     setCartItems(items);
   }, [items]);
-
-  const fetchCart = async () => {
-    try {
-      const response = await fetch(`${API_URL}/cart?t=${new Date().getTime()}`, {
-        credentials: "include",
-        headers: {
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          "Pragma": "no-cache"
-        }
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "No se pudo obtener el carrito");
-      }
-
-      setCartItems(data?.cart?.items || []);
-    } catch (error) {
-      console.error("Error refrescando carrito:", error);
-    }
-  };
 
   useEffect(() => {
     const fetchRecommendedProducts = async () => {
@@ -128,6 +106,7 @@ const CartView = () => {
       }
 
       setCartItems(data?.cart?.items || []);
+      await loadCart();
     } catch (error) {
       console.error("Error aumentando cantidad:", error);
       alert(error.message || "No se pudo aumentar la cantidad");
@@ -161,6 +140,7 @@ const CartView = () => {
       }
 
       setCartItems(data?.cart?.items || []);
+      await loadCart();
     } catch (error) {
       console.error("Error disminuyendo cantidad:", error);
       alert(error.message || "No se pudo disminuir la cantidad");
@@ -185,6 +165,7 @@ const CartView = () => {
       }
 
       setCartItems(data?.cart?.items || []);
+      await loadCart();
     } catch (error) {
       console.error("Error eliminando producto:", error);
       alert(error.message || "No se pudo eliminar el producto");
@@ -197,7 +178,6 @@ const CartView = () => {
     try {
       setLoadingAction(true);
       await clearCart();
-      await fetchCart();
     } catch (error) {
       console.error("Error vaciando carrito:", error);
       alert("No se pudo vaciar el carrito");

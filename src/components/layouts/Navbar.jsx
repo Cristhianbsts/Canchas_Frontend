@@ -3,6 +3,7 @@ import ModalRegistro from "../ModalRegistro";
 import "../../css/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import { useCartContext } from "../../context/CartContext";
 import { logOut } from "../../helpers/logout";
 
 const Navbar = () => {
@@ -11,12 +12,18 @@ const Navbar = () => {
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
 
   const { user, clearUserData } = useContext(UserContext);
+  const { items, resetCartState } = useCartContext();
   const navigate = useNavigate();
+  const totalCartItems = items.reduce(
+    (total, item) => total + (Number(item?.quantity) || 0),
+    0
+  );
 
   const handleLogout = async () => {
     try {
       await logOut();
       clearUserData();
+      resetCartState();
       setMostrarDropdown(false);
       navigate("/login");
     } catch (error) {
@@ -66,7 +73,12 @@ const Navbar = () => {
                  {user && user.role !== 'admin' && (
                    <li className="nav-item-custom">
                      <Link to="/cart" className="nav-link-custom">
-                       <i className="bi bi-cart"></i>
+                       <span className="nav-icon-wrapper">
+                         <i className="bi bi-cart"></i>
+                         {totalCartItems > 0 && (
+                           <span className="cart-badge-count">{totalCartItems}</span>
+                         )}
+                       </span>
                        <span>Carrito</span>
                      </Link>
                    </li>
