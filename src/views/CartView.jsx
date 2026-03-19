@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "../hooks/useCart";
 import { createCartPaymentRequest } from "../services/paymentService";
+import { formatPrice } from "../helpers/formatPrice";
+import { getProducts } from "../helpers/product";
 import "../css/cartView.css";
 
 const API_URL = `${import.meta.env.VITE_API_URL}`;
@@ -47,14 +49,8 @@ const CartView = () => {
         setLoadingRecommendations(true);
         setRecommendationError("");
 
-        const response = await fetch(`${API_URL}/products`);
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "No se pudieron cargar los productos");
-        }
-
-        const products = data.items || data.products || data || [];
+        const products = await getProducts();
+        
         setRecommendedProducts(
           Array.isArray(products) ? products.slice(0, 6) : []
         );
@@ -84,13 +80,7 @@ const CartView = () => {
     return cartItems.reduce((acc, item) => acc + (Number(item?.quantity) || 0), 0);
   }, [cartItems]);
 
-  const formatPrice = (value) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      maximumFractionDigits: 0,
-    }).format(Number(value) || 0);
-  };
+
 
   const handleCheckout = async () => {
     try {

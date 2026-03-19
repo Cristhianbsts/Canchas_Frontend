@@ -1,5 +1,6 @@
 import "../css/contact.css"
 import 'font-awesome/css/font-awesome.min.css';
+import { sendContactMessage } from "../helpers/contact";
 
 const ContactScreen = () => {
     const handleSubmit = async (e) => {
@@ -7,24 +8,18 @@ const ContactScreen = () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-            const result = await response.json();
-            if (!response.ok) {
-                console.log("Errores de validación:", result.errores);
-                alert(result.errores.map(err => err.msg).join("\n"));
+            const response = await sendContactMessage(data);
+            
+            if (!response.success) {
+                console.log("Errores de validación:", response.errors);
+                alert(response.errors?.map(err => err.msg).join("\n") || "Error al enviar el mensaje");
                 return;
             }
+            
             alert("¡Mensaje enviado con éxito!");
             e.target.reset();
         } catch (error) {
-            console.error("Error de red:", error);
-            alert("No se pudo conectar con el servidor.");
+            alert(error.message);
         }
     };
     return (

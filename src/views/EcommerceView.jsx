@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import CardProduct from '../components/CardProduct'
 import "../css/viewsCSS/EcommerceView.css"
 import Pagination from '../components/Pagination'
+import SearchBar from '../components/SearchBar'
+import { getProducts } from '../helpers/product';
 
 
 export default function EcommerceView() {
@@ -22,32 +24,23 @@ export default function EcommerceView() {
   }
 
   useEffect(() => {
-    const getProducts = async () => {
+    const fetchProductsData = async () => {
       try {
         setLoading(true)
         setError("")
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/products`)
-        const data = await response.json()
-
-        if (!response.ok) {
-          setError(data.message || "No se pudieron cargar los productos")
-          setProducts([])
-          return
-        }
-
-        const productosRecibidos = data.items || data.products || data.data || []
+        const productosRecibidos = await getProducts();
         setProducts(productosRecibidos)
       } catch (error) {
         console.error("Error al traer productos:", error)
-        setError("Error del servidor al cargar productos")
+        setError(error.message || "Error del servidor al cargar productos")
         setProducts([])
       } finally {
         setLoading(false)
       }
     }
 
-    getProducts()
+    fetchProductsData()
   }, [])
 
   const productosFiltrados = useMemo(() => {
@@ -81,35 +74,6 @@ export default function EcommerceView() {
     return productosFiltrados.slice(inicio, fin)
   }, [productosFiltrados, paginaActual])
 
-  const productosAgrupadosPorCategoria = useMemo(() => {
-    const grupos = productosPaginados.reduce((acc, product) => {
-      const nombreCategoria = product.category?.name || "Sin categoría"
-
-      if (!acc[nombreCategoria]) {
-        acc[nombreCategoria] = []
-      }
-
-      acc[nombreCategoria].push(product)
-      return acc
-    }, {})
-
-    Object.keys(grupos).forEach((categoria) => {
-      grupos[categoria].sort((a, b) => {
-        const nombreA = normalizarTexto(a.name)
-        const nombreB = normalizarTexto(b.name)
-        return nombreA.localeCompare(nombreB, "es")
-      })
-    })
-
-    return grupos
-  }, [productosPaginados])
-
-  const categorias = useMemo(() => {
-    return Object.keys(productosAgrupadosPorCategoria).sort((a, b) =>
-      normalizarTexto(a).localeCompare(normalizarTexto(b), "es")
-    )
-  }, [productosAgrupadosPorCategoria])
-
   const handleChangeSearch = (e) => {
     setSearch(e.target.value)
     setPaginaActual(1)
@@ -130,14 +94,14 @@ export default function EcommerceView() {
         </section>
 
         <div className="container mt-5">
-          <div className="mt-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar productos por nombre, descripción o categoría..."
-              value={search}
-              onChange={handleChangeSearch}
-            />
+          <div className="row justify-content-center">
+            <div className="col-md-8 col-lg-6">
+              <SearchBar 
+                value={search} 
+                onChange={handleChangeSearch} 
+                placeholder="Buscar por nombre o categoría..." 
+              />
+            </div>
           </div>
         </div>
 
@@ -170,25 +134,11 @@ export default function EcommerceView() {
 
           {!loading && !error && productosFiltrados.length > 0 && (
             <>
-              {categorias.map((categoria) => (
-                <div className="category-section mb-5" key={categoria}>
-                  <div className="d-flex justify-content-between align-items-end mb-4">
-                    <h3 className="h4 fw-bold mb-0 text-uppercase border-start border-4 border-dark ps-3">
-                      {categoria}
-                    </h3>
-
-                    <span className="text-muted small">
-                      {productosAgrupadosPorCategoria[categoria].length} producto(s)
-                    </span>
-                  </div>
-
-                  <div className="row g-4">
-                    {productosAgrupadosPorCategoria[categoria].map((product) => (
-                      <CardProduct key={product._id} product={product} />
-                    ))}
-                  </div>
-                </div>
-              ))}
+              <div className="row g-4 mb-5">
+                {productosPaginados.map((product) => (
+                  <CardProduct key={product._id} product={product} />
+                ))}
+              </div>
 
               <Pagination
                 paginaActual={paginaActual}

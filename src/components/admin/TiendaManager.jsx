@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { getProducts, saveProduct, deleteProduct } from '../../helpers/product';
+import { getCategories, saveCategory, deleteCategory } from '../../helpers/category';
 
 // Usamos la misma constante que en Canchas para mantener uniformidad
 const IMAGE_DEFAULT = 'https://res.cloudinary.com/dp7qbi976/image/upload/v1733325605/v7fiv6xngp8o78v7a3sd.webp';
@@ -28,13 +30,11 @@ export const TiendaManager = () => {
   const cargarDatos = async () => {
     setLoading(true);
     try {
-      const [resProd, resCat] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_URL}/products`, { credentials: 'include' }),
-        fetch(`${import.meta.env.VITE_API_URL}/categories`, { credentials: 'include' })
+      const [dataProd, dataCat] = await Promise.all([
+        getProducts(),
+        getCategories()
       ]);
-      const dataProd = await resProd.json();
-      const dataCat = await resCat.json();
-      if (dataProd.items) setProductos(dataProd.items);
+      if (dataProd) setProductos(dataProd);
       if (dataCat.ok) setCategorias(dataCat.categories);
     } catch (error) {
       console.error("Error cargando tienda:", error);
@@ -68,12 +68,8 @@ export const TiendaManager = () => {
       data.append('archivo', formProd.imageFile);
     }
 
-    const url = editandoId ? `${import.meta.env.VITE_API_URL}/products/${editandoId}` : `${import.meta.env.VITE_API_URL}/products`;
-    const method = editandoId ? 'PATCH' : 'POST';
-
     try {
-      const response = await fetch(url, { method, body: data, credentials: 'include' });
-      const res = await response.json();
+      const res = await saveProduct(editandoId, data);
       if (res.ok) {
         setMostrarModalProd(false);
         setEditandoId(null);
@@ -90,17 +86,8 @@ export const TiendaManager = () => {
 
   const guardarCategoria = async (e) => {
     e.preventDefault();
-    const url = editandoId ? `${import.meta.env.VITE_API_URL}/categories/${editandoId}` : `${import.meta.env.VITE_API_URL}/categories`;
-    const method = editandoId ? 'PATCH' : 'POST';
-
     try {
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formCat),
-        credentials: 'include'
-      });
-      const res = await response.json();
+      const res = await saveCategory(editandoId, formCat);
       if (res.ok) {
         setMostrarModalCat(false);
         setEditandoId(null);
@@ -116,10 +103,8 @@ export const TiendaManager = () => {
 
   const borrarItem = async (tipo, id, nombre) => {
     if (!window.confirm(`¿Seguro que deseas eliminar "${nombre}"?`)) return;
-    const endpoint = tipo === 'prod' ? 'products' : 'categories';
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}/${id}`, { method: 'DELETE', credentials: 'include' });
-      const data = await res.json();
+      const data = tipo === 'prod' ? await deleteProduct(id) : await deleteCategory(id);
       if (data.ok) cargarDatos();
     } catch (error) {
       console.error("Error al eliminar:", error);

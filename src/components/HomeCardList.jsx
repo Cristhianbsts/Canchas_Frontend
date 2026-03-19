@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import HomeCard from './HomeCard';
+import { getProducts } from '../helpers/product';
 import "../css/home-card-list.css"
 
 const HomeCardList = () => {
@@ -8,9 +9,8 @@ const HomeCardList = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/products?limit=8`);
-            const data = await response.json();
-            setProducts(data.items);
+            const items = await getProducts(8);
+            setProducts(items);
             setLoading(false);
         } catch (error) {
             console.error("Error cargando productos:", error);

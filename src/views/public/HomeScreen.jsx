@@ -1,3 +1,4 @@
+import { getProducts } from "../../helpers/product";
 import "../../css/home.css"
 import 'font-awesome/css/font-awesome.min.css';
 import estadioImg from "../../assets/estadio.webp"
@@ -15,9 +16,9 @@ const HomeScreen = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_URL}/products`)
-            .then(res => res.json())
-            .then(data => setProductos(data));
+        getProducts()
+            .then(data => setProductos(data))
+            .catch(console.error);
     }, []);
 
     return (

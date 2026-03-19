@@ -28,4 +28,15 @@ const getProfile = async () => {
   return { ok: response.ok, data };
 };
 
-export { logIn, getProfile };
+const registerUser = async (userData) => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  return await response.json();
+};
+
+export { logIn, getProfile, registerUser };

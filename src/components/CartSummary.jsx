@@ -1,5 +1,5 @@
 import { useCart } from "../hooks/useCart";
-import { formatPrice } from "../utils/formatPrice";
+import { formatPrice } from "../helpers/formatPrice";
 import CheckoutButton from "./CheckoutButton";
 import "../css/cartSummary.css";
 

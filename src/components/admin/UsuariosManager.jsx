@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getUsers, activateUser, suspendUser } from '../../helpers/user';
 
 export const UsuariosManager = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -7,11 +8,7 @@ export const UsuariosManager = () => {
 
   const obtenerUsuarios = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
-        credentials: 'include'
-      });
-
-      const data = await response.json();
+      const data = await getUsers();
 
       if (data.ok) {
         setUsuarios(data.users);
@@ -34,17 +31,8 @@ export const UsuariosManager = () => {
 
     if (!confirmar) return;
 
-    const endpoint = isActive ? 'suspend' : 'activate';
-    const url = `${import.meta.env.VITE_API_URL}/users/${id}/${endpoint}`;
-
     try {
-      const response = await fetch(url, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-      });
-
-      const data = await response.json();
+      const data = isActive ? await suspendUser(id) : await activateUser(id);
 
       if (data.ok) {
         obtenerUsuarios();

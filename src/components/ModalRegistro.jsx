@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom';
+import { registerUser } from '../helpers/auth';
 
 const ModalRegistro = ({ isOpen, onClose }) => {
   // Estados para controlar la visibilidad de las contraseñas
@@ -21,14 +22,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
     try {
 
       const { repeatpassword, terminos, ...submitData } = data;
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData),
-      });
-      const response = await res.json();
+      const response = await registerUser(submitData);
 
       response.ok ? alert("Usuario creado con exito") : alert("Error al crear el usuario");
 

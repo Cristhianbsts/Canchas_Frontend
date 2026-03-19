@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getField, saveField, deleteField } from '../../helpers/field';
 
 export const CanchasManager = () => {
   const [canchas, setCanchas] = useState([]);
@@ -10,9 +11,8 @@ export const CanchasManager = () => {
 
   const obtenerCanchas = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/fields`, { credentials: 'include' });
-      const data = await response.json();
-      if (data.ok) setCanchas(data.fields);
+      const fields = await getField();
+      if (fields) setCanchas(fields);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -52,16 +52,8 @@ export const CanchasManager = () => {
     data.append('active', formData.active);
     if (formData.imageFile) data.append('archivo', formData.imageFile);
 
-    const API_URL = import.meta.env.VITE_API_URL;
-
-    const url = editandoId
-      ? `${API_URL}/fields/${editandoId}`
-      : `${API_URL}/fields`;
-    const method = editandoId ? 'PATCH' : 'POST';
-
     try {
-      const response = await fetch(url, { method, body: data, credentials: 'include' });
-      const resData = await response.json();
+      const resData = await saveField(editandoId, data);
       if (resData.ok) {
         setMostrarModal(false);
         obtenerCanchas();
@@ -77,8 +69,7 @@ export const CanchasManager = () => {
   const borrarCancha = async (id, nombre) => {
     if (!window.confirm(`¿Baja para "${nombre}"?`)) return;
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/fields/${id}`, { method: 'DELETE', credentials: 'include' });
-      const data = await response.json();
+      const data = await deleteField(id);
       if (data.ok) obtenerCanchas();
     } catch (error) {
       console.error("Error:", error);

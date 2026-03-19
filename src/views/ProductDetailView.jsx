@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AddToCartButton from "../components/AddToCartButton";
-
+import { formatPrice } from "../helpers/formatPrice";
+import { getProductById } from "../helpers/product";
 const ProductDetailView = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -27,20 +28,7 @@ const ProductDetailView = () => {
         setLoadingProduct(true);
         setErrorProduct("");
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/products`);
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "No se pudo cargar el producto");
-        }
-
-        const products = data.items || [];
-        const foundProduct = products.find((item) => item._id === id);
-
-        if (!foundProduct) {
-          throw new Error("Producto no encontrado");
-        }
-
+        const foundProduct = await getProductById(id);
         setProduct(foundProduct);
       } catch (error) {
         console.error("Error cargando detalle:", error);
@@ -53,13 +41,7 @@ const ProductDetailView = () => {
     fetchProduct();
   }, [id]);
 
-  const formatPrice = (value) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      maximumFractionDigits: 0,
-    }).format(Number(value) || 0);
-  };
+
 
   if (loadingProduct) {
     return (
