@@ -2,11 +2,13 @@ import "../css/modal.css";
 import close from "../assets/close.png";
 import { getBooking, reserveBooking } from "../helpers/booking";
 import { generateDays } from "../helpers/date";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const ReserveModal = ({ court, closeModal }) => {
   if (!court) return null;
 
+  const { user } = useContext(UserContext);
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableHours, setAvailableHours] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -53,13 +55,12 @@ const ReserveModal = ({ court, closeModal }) => {
       return;
     }
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?._id || "69b72e714a9f29aa7602d50f";
-
-    if (!userId) {
+    if (!user?._id) {
       alert("Debes iniciar sesión para reservar");
       return;
     }
+
+    const userId = user._id;
 
     setReserving(true);
 
@@ -154,14 +155,20 @@ const ReserveModal = ({ court, closeModal }) => {
 
         <div className="reserve-footer">
           <span>${court.pricePerHour}</span>
-          <button
-            type="button"
-            className="btn-reserve"
-            onClick={handleReserve}
-            disabled={!selectedDate || !selectedHour || reserving}
-          >
-            {reserving ? "Reservando..." : "Confirmar"}
-          </button>
+          {user ? (
+            <button
+              type="button"
+              className="btn-reserve"
+              onClick={handleReserve}
+              disabled={!selectedDate || !selectedHour || reserving}
+            >
+              {reserving ? "Reservando..." : "Confirmar"}
+            </button>
+          ) : (
+            <div className="text-danger small fw-bold">
+              Inicia sesión para reservar
+            </div>
+          )}
         </div>
       </div>
     </div>
