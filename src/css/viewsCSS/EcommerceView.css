@@ -92,7 +92,73 @@
             color: #fff;
         }
 
+.advanced-filters {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+.filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+.filter-label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #183524;
+        }
+
+.filter-select,
+.filter-input {
+            width: 100%;
+            border: 1px solid #d9e3db;
+            border-radius: 14px;
+            background: #fff;
+            padding: 0.8rem 0.95rem;
+            color: #183524;
+            outline: none;
+        }
+
+.price-range-group {
+            grid-column: span 2;
+        }
+
+.price-range-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+.clear-filters-btn {
+            border: none;
+            border-radius: 14px;
+            background: #183524;
+            color: #fff;
+            padding: 0.82rem 1rem;
+            font-weight: 700;
+            transition: opacity 0.2s ease;
+        }
+
+.clear-filters-btn:hover {
+            opacity: 0.92;
+        }
+
 @media (max-width: 767.98px) {
+    .advanced-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .price-range-group {
+        grid-column: span 1;
+    }
+
+    .price-range-inputs {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .products-carousel {
         display: flex !important;
         flex-wrap: nowrap !important;
@@ -126,6 +192,14 @@
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+    .advanced-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .price-range-group {
+        grid-column: span 2;
+    }
+
     .products-carousel {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }

@@ -12,6 +12,10 @@ export default function EcommerceView() {
   const [error, setError] = useState("")
   const [search, setSearch] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("Todas")
+  const [sortBy, setSortBy] = useState("relevancia")
+  const [stockFilter, setStockFilter] = useState("todos")
+  const [minPrice, setMinPrice] = useState("")
+  const [maxPrice, setMaxPrice] = useState("")
   const [paginaActual, setPaginaActual] = useState(1)
 
   const productosPorPagina = 8
@@ -59,6 +63,8 @@ export default function EcommerceView() {
   const productosFiltrados = useMemo(() => {
     const busquedaNormalizada = normalizarTexto(search)
     const categoriaSeleccionada = normalizarTexto(selectedCategory)
+    const minPriceValue = minPrice === "" ? null : Number(minPrice)
+    const maxPriceValue = maxPrice === "" ? null : Number(maxPrice)
 
 
     return products
@@ -66,12 +72,25 @@ export default function EcommerceView() {
         const nombre = normalizarTexto(product.name)
         const descripcion = normalizarTexto(product.description)
         const categoria = normalizarTexto(product.category?.name)
+        const precio = Number(product.price) || 0
+        const stock = Number(product.stock) || 0
         const coincideCategoria =
           categoriaSeleccionada === normalizarTexto("Todas") ||
           categoria === categoriaSeleccionada
+        const coincideStock =
+          stockFilter === "todos" ||
+          (stockFilter === "disponibles" && stock > 0) ||
+          (stockFilter === "sin-stock" && stock <= 0)
+        const coincidePrecioMin =
+          minPriceValue === null || Number.isNaN(minPriceValue) || precio >= minPriceValue
+        const coincidePrecioMax =
+          maxPriceValue === null || Number.isNaN(maxPriceValue) || precio <= maxPriceValue
 
         return (
           coincideCategoria &&
+          coincideStock &&
+          coincidePrecioMin &&
+          coincidePrecioMax &&
           (
             nombre.includes(busquedaNormalizada) ||
             descripcion.includes(busquedaNormalizada) ||
@@ -80,11 +99,25 @@ export default function EcommerceView() {
         )
       })
       .sort((a, b) => {
+        if (sortBy === "precio-menor") {
+          return (Number(a.price) || 0) - (Number(b.price) || 0)
+        }
+
+        if (sortBy === "precio-mayor") {
+          return (Number(b.price) || 0) - (Number(a.price) || 0)
+        }
+
+        if (sortBy === "nombre-desc") {
+          const nombreA = normalizarTexto(a.name)
+          const nombreB = normalizarTexto(b.name)
+          return nombreB.localeCompare(nombreA, "es")
+        }
+
         const nombreA = normalizarTexto(a.name)
         const nombreB = normalizarTexto(b.name)
         return nombreA.localeCompare(nombreB, "es")
       })
-  }, [products, search, selectedCategory])
+  }, [products, search, selectedCategory, sortBy, stockFilter, minPrice, maxPrice])
 
   const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina) || 1
 
@@ -101,6 +134,36 @@ export default function EcommerceView() {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category)
+    setPaginaActual(1)
+  }
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value)
+    setPaginaActual(1)
+  }
+
+  const handleStockChange = (e) => {
+    setStockFilter(e.target.value)
+    setPaginaActual(1)
+  }
+
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value)
+    setPaginaActual(1)
+  }
+
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value)
+    setPaginaActual(1)
+  }
+
+  const handleClearFilters = () => {
+    setSearch("")
+    setSelectedCategory("Todas")
+    setSortBy("relevancia")
+    setStockFilter("todos")
+    setMinPrice("")
+    setMaxPrice("")
     setPaginaActual(1)
   }
 
@@ -145,6 +208,71 @@ export default function EcommerceView() {
                   {category}
                 </button>
               ))}
+            </div>
+          </div>
+        )}
+
+        {!loading && (
+          <div className="container mt-3">
+            <div className="advanced-filters">
+              <div className="filter-group">
+                <label className="filter-label" htmlFor="sortBy">Ordenar por</label>
+                <select
+                  id="sortBy"
+                  className="filter-select"
+                  value={sortBy}
+                  onChange={handleSortChange}
+                >
+                  <option value="relevancia">Nombre A-Z</option>
+                  <option value="nombre-desc">Nombre Z-A</option>
+                  <option value="precio-menor">Menor precio</option>
+                  <option value="precio-mayor">Mayor precio</option>
+                </select>
+              </div>
+
+              <div className="filter-group">
+                <label className="filter-label" htmlFor="stockFilter">Disponibilidad</label>
+                <select
+                  id="stockFilter"
+                  className="filter-select"
+                  value={stockFilter}
+                  onChange={handleStockChange}
+                >
+                  <option value="todos">Todos</option>
+                  <option value="disponibles">Con stock</option>
+                  <option value="sin-stock">Sin stock</option>
+                </select>
+              </div>
+
+              <div className="filter-group price-range-group">
+                <label className="filter-label">Rango de precio</label>
+                <div className="price-range-inputs">
+                  <input
+                    type="number"
+                    min="0"
+                    className="filter-input"
+                    placeholder="Desde"
+                    value={minPrice}
+                    onChange={handleMinPriceChange}
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    className="filter-input"
+                    placeholder="Hasta"
+                    value={maxPrice}
+                    onChange={handleMaxPriceChange}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="clear-filters-btn"
+                onClick={handleClearFilters}
+              >
+                Limpiar filtros
+              </button>
             </div>
           </div>
         )}
