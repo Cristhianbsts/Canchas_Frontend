@@ -62,34 +62,8 @@
             width: 100%;
         }
 
-.category-filters {
-            display: flex;
-            gap: 0.75rem;
-            overflow-x: auto;
-            padding: 0.25rem 0 0.5rem;
-            scrollbar-width: none;
-        }
-
-.category-filters::-webkit-scrollbar {
-            display: none;
-        }
-
-.category-filter-chip {
-            border: 1px solid #d9e3db;
-            background: #fff;
-            color: #183524;
-            border-radius: 999px;
-            padding: 0.65rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }
-
-.category-filter-chip.active {
-            background: #1ea53a;
-            border-color: #1ea53a;
-            color: #fff;
+.searchbar-shell {
+            max-width: 960px;
         }
 
 .advanced-filters {

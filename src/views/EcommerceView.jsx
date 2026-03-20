@@ -183,7 +183,7 @@ export default function EcommerceView() {
 
         <div className="container mt-5">
           <div className="row justify-content-center">
-            <div className="col-md-8 col-lg-6">
+            <div className="col-12 col-md-11 col-lg-9 searchbar-shell">
               <SearchBar 
                 value={search} 
                 onChange={handleChangeSearch} 
@@ -193,28 +193,25 @@ export default function EcommerceView() {
           </div>
         </div>
 
-        {!loading && categorias.length > 1 && (
-          <div className="container mt-4">
-            <div className="category-filters">
-              {categorias.map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  className={`category-filter-chip ${
-                    selectedCategory === category ? "active" : ""
-                  }`}
-                  onClick={() => handleCategoryChange(category)}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         {!loading && (
           <div className="container mt-3">
             <div className="advanced-filters">
+              <div className="filter-group">
+                <label className="filter-label" htmlFor="categoryFilter">Categoría</label>
+                <select
+                  id="categoryFilter"
+                  className="filter-select"
+                  value={selectedCategory}
+                  onChange={(e) => handleCategoryChange(e.target.value)}
+                >
+                  {categorias.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="filter-group">
                 <label className="filter-label" htmlFor="sortBy">Ordenar por</label>
                 <select
