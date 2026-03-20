@@ -1,5 +1,8 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+export const isVisibleProduct = (product) =>
+  Boolean(product && product._id && product.active !== false);
+
 export const getProducts = async (limit = null) => {
   const url = limit ? `${API_URL}/products?limit=${limit}` : `${API_URL}/products`;
   const response = await fetch(url, { credentials: 'include' });
@@ -14,7 +17,7 @@ export const getProducts = async (limit = null) => {
 
 export const getProductById = async (id) => {
   const products = await getProducts();
-  const foundProduct = products.find((item) => item._id === id);
+  const foundProduct = products.find((item) => item._id === id && isVisibleProduct(item));
 
   if (!foundProduct) {
     throw new Error("Producto no encontrado");

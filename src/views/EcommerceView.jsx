@@ -3,7 +3,7 @@ import CardProduct from '../components/CardProduct'
 import "../css/viewsCSS/EcommerceView.css"
 import Pagination from '../components/Pagination'
 import SearchBar from '../components/SearchBar'
-import { getProducts } from '../helpers/product';
+import { getProducts, isVisibleProduct } from '../helpers/product';
 
 
 export default function EcommerceView() {
@@ -35,7 +35,11 @@ export default function EcommerceView() {
         setError("")
 
         const productosRecibidos = await getProducts();
-        setProducts(productosRecibidos)
+        setProducts(
+          Array.isArray(productosRecibidos)
+            ? productosRecibidos.filter(isVisibleProduct)
+            : []
+        )
       } catch (error) {
         console.error("Error al traer productos:", error)
         setError(error.message || "Error del servidor al cargar productos")

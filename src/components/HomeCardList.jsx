@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import HomeCard from './HomeCard';
-import { getProducts } from '../helpers/product';
+import { getProducts, isVisibleProduct } from '../helpers/product';
 import "../css/home-card-list.css"
 
 const HomeCardList = () => {
@@ -11,7 +11,7 @@ const HomeCardList = () => {
         try {
             const items = await getProducts(8);
             const visibleProducts = Array.isArray(items)
-                ? items.filter((item) => item?.active !== false)
+                ? items.filter(isVisibleProduct)
                 : [];
             setProducts(visibleProducts);
             setLoading(false);

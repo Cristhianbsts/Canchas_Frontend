@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useCart } from "../hooks/useCart";
 import { createCartPaymentRequest } from "../services/paymentService";
 import { formatPrice } from "../helpers/formatPrice";
-import { getProducts } from "../helpers/product";
+import { getProducts, isVisibleProduct } from "../helpers/product";
 import "../css/cartView.css";
 
 const API_URL = `${import.meta.env.VITE_API_URL}`;
@@ -30,7 +30,9 @@ const CartView = () => {
         const products = await getProducts();
         
         setRecommendedProducts(
-          Array.isArray(products) ? products.slice(0, 6) : []
+          Array.isArray(products)
+            ? products.filter(isVisibleProduct).slice(0, 6)
+            : []
         );
       } catch (error) {
         console.error("Error en recomendados:", error);
