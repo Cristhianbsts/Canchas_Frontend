@@ -52,6 +52,8 @@
 
 .court-card-body {
   padding: 22px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* tags */
@@ -69,7 +71,8 @@
   color: var(--color-text-secondary);
   line-height: 1.65;
   margin: 0 0 20px;
-  min-height: 52px;
+  min-height: 58px;
+  font-size: 0.98rem;
 }
 
 .court-footer {
@@ -78,6 +81,7 @@
   border-radius: 18px;
   padding: 14px 16px;
   gap: 12px;
+  margin-top: auto;
 }
 
 .price {
@@ -106,6 +110,7 @@
   border: none;
   font-weight: 700;
   box-shadow: 0 12px 24px rgba(27, 128, 61, 0.22);
+  min-width: 118px;
 }
 
 .btn-reserve:disabled {
