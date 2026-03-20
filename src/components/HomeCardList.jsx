@@ -10,7 +10,10 @@ const HomeCardList = () => {
     const fetchProducts = async () => {
         try {
             const items = await getProducts(8);
-            setProducts(items);
+            const visibleProducts = Array.isArray(items)
+                ? items.filter((item) => item?.active !== false)
+                : [];
+            setProducts(visibleProducts);
             setLoading(false);
         } catch (error) {
             console.error("Error cargando productos:", error);

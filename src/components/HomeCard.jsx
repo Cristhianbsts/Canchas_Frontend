@@ -4,6 +4,8 @@ import noImage from "../assets/no-image.webp"
 import { Link } from "react-router-dom";
 
 const HomeCard = ({ product }) => {
+    if (!product || product.active === false) return null;
+
     const { name, price, image, category, stock, _id } = product;
 
     const handleAdd = async () => {
