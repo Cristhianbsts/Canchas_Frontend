@@ -27,7 +27,7 @@ export default function CardProduct({ product }) {
   const productCategory = product.category?.name || "Sin categoría";
 
   return (
-    <div className="col-12 col-md-6 col-lg-4 px-3 mb-4 product-card-slide">
+    <div className="product-card-slide">
       <article
         className="card h-100 shadow-sm border-0 product-card mx-auto"
         style={{ maxWidth: "360px" }}

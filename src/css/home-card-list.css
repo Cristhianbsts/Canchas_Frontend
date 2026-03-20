@@ -4,3 +4,32 @@
     gap: 20px;
     padding: 20px;
 }
+
+@media (max-width: 767.98px) {
+    .list-card-cont {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 0;
+        padding: 20px 12px 16px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .list-card-cont::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .list-card-cont::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.18);
+        border-radius: 999px;
+    }
+
+    .list-card-cont > * {
+        flex: 0 0 86%;
+        width: 86%;
+        scroll-snap-align: center;
+        padding-right: 14px;
+    }
+}
