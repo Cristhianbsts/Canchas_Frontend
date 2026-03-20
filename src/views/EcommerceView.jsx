@@ -11,6 +11,7 @@ export default function EcommerceView() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [search, setSearch] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("Todas")
   const [paginaActual, setPaginaActual] = useState(1)
 
   const productosPorPagina = 8
@@ -43,8 +44,21 @@ export default function EcommerceView() {
     fetchProductsData()
   }, [])
 
+  const categorias = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(
+        products
+          .map((product) => product.category?.name)
+          .filter(Boolean)
+      )
+    ).sort((a, b) => a.localeCompare(b, "es"))
+
+    return ["Todas", ...uniqueCategories]
+  }, [products])
+
   const productosFiltrados = useMemo(() => {
     const busquedaNormalizada = normalizarTexto(search)
+    const categoriaSeleccionada = normalizarTexto(selectedCategory)
 
 
     return products
@@ -52,11 +66,17 @@ export default function EcommerceView() {
         const nombre = normalizarTexto(product.name)
         const descripcion = normalizarTexto(product.description)
         const categoria = normalizarTexto(product.category?.name)
+        const coincideCategoria =
+          categoriaSeleccionada === normalizarTexto("Todas") ||
+          categoria === categoriaSeleccionada
 
         return (
-          nombre.includes(busquedaNormalizada) ||
-          descripcion.includes(busquedaNormalizada) ||
-          categoria.includes(busquedaNormalizada)
+          coincideCategoria &&
+          (
+            nombre.includes(busquedaNormalizada) ||
+            descripcion.includes(busquedaNormalizada) ||
+            categoria.includes(busquedaNormalizada)
+          )
         )
       })
       .sort((a, b) => {
@@ -64,7 +84,7 @@ export default function EcommerceView() {
         const nombreB = normalizarTexto(b.name)
         return nombreA.localeCompare(nombreB, "es")
       })
-  }, [products, search])
+  }, [products, search, selectedCategory])
 
   const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina) || 1
 
@@ -76,6 +96,11 @@ export default function EcommerceView() {
 
   const handleChangeSearch = (e) => {
     setSearch(e.target.value)
+    setPaginaActual(1)
+  }
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category)
     setPaginaActual(1)
   }
 
@@ -104,6 +129,25 @@ export default function EcommerceView() {
             </div>
           </div>
         </div>
+
+        {!loading && categorias.length > 1 && (
+          <div className="container mt-4">
+            <div className="category-filters">
+              {categorias.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  className={`category-filter-chip ${
+                    selectedCategory === category ? "active" : ""
+                  }`}
+                  onClick={() => handleCategoryChange(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <section className="container-fluid px-4 py-5 bg-white">
           <div className="text-center mb-5">
