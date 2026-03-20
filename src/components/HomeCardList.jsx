@@ -9,7 +9,7 @@ const HomeCardList = () => {
 
     const fetchProducts = async () => {
         try {
-            const items = await getProducts(8);
+            const items = await getProducts(5);
             const visibleProducts = Array.isArray(items)
                 ? items.filter((item) => isVisibleProduct(item) && item?.category?.name)
                 : [];

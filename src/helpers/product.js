@@ -1,10 +1,12 @@
 const API_URL = import.meta.env.VITE_API_URL;
+const ALL_PRODUCTS_LIMIT = 1000;
 
 export const isVisibleProduct = (product) =>
   Boolean(product && product._id && product.active !== false);
 
-export const getProducts = async (limit = null) => {
-  const url = limit ? `${API_URL}/products?limit=${limit}` : `${API_URL}/products`;
+export const getProducts = async (limit = ALL_PRODUCTS_LIMIT) => {
+  const resolvedLimit = Number.isFinite(limit) ? limit : ALL_PRODUCTS_LIMIT;
+  const url = `${API_URL}/products?limit=${resolvedLimit}`;
   const response = await fetch(url, { credentials: 'include' });
   const data = await response.json();
 
