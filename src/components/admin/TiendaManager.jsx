@@ -160,11 +160,11 @@ export const TiendaManager = () => {
         <div className="text-center py-5"><div className="spinner-border text-success"></div></div>
       ) : tabActiva === 'productos' ? (
         /* VISTA PRODUCTOS (TARJETAS COMO CANCHAS) */
-        <div className="row g-4">
+        <div className="row g-3">
           {productos.map(p => (
-            <div className="col-12 col-md-6 col-lg-4" key={p._id}>
+            <div className="col-12 col-sm-6 col-lg-4 col-xl-3" key={p._id}>
               <div className={`card h-100 shadow-sm border-0 ${!p.active ? 'opacity-75' : ''}`}>
-                <div style={{ height: '200px', overflow: 'hidden' }} className="bg-light position-relative">
+                <div style={{ height: '140px', overflow: 'hidden' }} className="bg-light position-relative">
                   <img
                     src={p.image || IMAGE_DEFAULT}
                     className="w-100 h-100"
@@ -176,16 +176,27 @@ export const TiendaManager = () => {
                   </span>
                   {!p.active && <span className="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Inactivo</span>}
                 </div>
-                <div className="card-body d-flex flex-column">
-                  <h5 className="fw-bold text-uppercase mb-1" style={{ color: 'var(--color-title)' }}>{p.name}</h5>
-                  <p className="text-muted small mb-3 text-truncate">{p.description || 'Sin descripción disponible'}</p>
+                <div className="card-body d-flex flex-column p-3">
+                  <h5 className="fw-bold text-uppercase mb-1 h6" style={{ color: 'var(--color-title)' }}>{p.name}</h5>
+                  <p
+                    className="text-muted small mb-2"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      minHeight: '2.4rem'
+                    }}
+                  >
+                    {p.description || 'Sin descripción disponible'}
+                  </p>
                   <div className="d-flex justify-content-between align-items-center mt-auto p-2 rounded" style={{ backgroundColor: '#f8f9fa' }}>
-                    <span className="fs-5 fw-bold" style={{ color: 'var(--color-primary)' }}>${p.price}</span>
+                    <span className="fs-6 fw-bold" style={{ color: 'var(--color-primary)' }}>${p.price}</span>
                     <span className={`badge ${p.stock < 5 ? 'bg-danger-subtle text-danger' : 'bg-light text-dark border'}`}>Stock: {p.stock}</span>
                   </div>
-                  <div className="d-flex gap-2 mt-3">
-                    <button onClick={() => { setEditandoId(p._id); setPreview(p.image || IMAGE_DEFAULT); setFormProd({ ...p, category: p.category?._id || p.category, imageFile: null }); setMostrarModalProd(true); }} className="btn btn-outline-secondary flex-grow-1 btn-sm d-flex align-items-center justify-content-center gap-1 py-2"><i className="bi bi-pencil-square"></i> Editar</button>
-                    <button onClick={() => borrarItem('prod', p._id, p.name)} className="btn btn-outline-danger flex-grow-1 btn-sm d-flex align-items-center justify-content-center gap-1 py-2"><i className="bi bi-trash3"></i> Borrar</button>
+                  <div className="d-grid gap-2 mt-3">
+                    <button onClick={() => { setEditandoId(p._id); setPreview(p.image || IMAGE_DEFAULT); setFormProd({ ...p, category: p.category?._id || p.category, imageFile: null }); setMostrarModalProd(true); }} className="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center gap-1 py-2"><i className="bi bi-pencil-square"></i> Editar</button>
+                    <button onClick={() => borrarItem('prod', p._id, p.name)} className="btn btn-outline-danger btn-sm d-flex align-items-center justify-content-center gap-1 py-2"><i className="bi bi-trash3"></i> Borrar</button>
                   </div>
                 </div>
               </div>
