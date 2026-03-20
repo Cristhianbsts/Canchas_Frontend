@@ -46,6 +46,10 @@
 }
 
 .nav-link-profile .profile-caret {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 0.95rem;
   margin-bottom: 0;
   line-height: 1;
