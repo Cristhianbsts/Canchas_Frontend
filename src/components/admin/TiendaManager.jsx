@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-  getAdminProducts,
+  getProducts,
   saveProduct,
   activateProduct,
   deactivateProduct,
 } from "../../helpers/product";
 import {
-  getAdminCategories,
+  getCategories,
   saveCategory,
   activateCategory,
   deactivateCategory,
@@ -43,8 +43,8 @@ export const TiendaManager = () => {
     setLoading(true);
     try {
       const [dataProd, dataCat] = await Promise.all([
-        getAdminProducts(),
-        getAdminCategories(),
+        getProducts(),
+        getCategories(),
       ]);
       if (dataProd) setProductos(dataProd);
       if (dataCat.ok) setCategorias(dataCat.categories);

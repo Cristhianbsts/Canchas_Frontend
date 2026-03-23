@@ -5,13 +5,6 @@ export const getCategories = async () => {
   return await response.json();
 };
 
-export const getAdminCategories = async () => {
-  const response = await fetch(`${API_URL}/categories/admin`, {
-    credentials: "include",
-  });
-  return await response.json();
-};
-
 export const saveCategory = async (id, data) => {
   const url = id ? `${API_URL}/categories/${id}` : `${API_URL}/categories`;
   const method = id ? "PATCH" : "POST";
