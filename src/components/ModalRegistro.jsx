@@ -17,6 +17,18 @@ const ModalRegistro = ({ isOpen, onClose }) => {
 
   const passwordValue = watch("password");
 
+  const getRegisterErrorMessage = (response) => {
+    if (Array.isArray(response?.msg) && response.msg.length > 0) {
+      return response.msg.map((error) => error.msg).join("\n");
+    }
+
+    if (typeof response?.msg === "string") {
+      return response.msg;
+    }
+
+    return "Error al crear el usuario";
+  };
+
   const onSubmit = async (data) => {
     try {
       const { repeatpassword, terminos, ...submitData } = data;
@@ -24,7 +36,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
 
       response.ok
         ? alert("Usuario creado con exito")
-        : alert(response.message || "Error al crear el usuario");
+        : alert(getRegisterErrorMessage(response));
 
       if (response.ok) {
         reset();
@@ -83,18 +95,14 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                   placeholder="Usuario"
                   aria-label="Usuario"
                   {...register("username", {
-                    required: "El usuario es requerido",
+                    required: "Debe ingresar algun nombre de usuario",
                     minLength: {
-                      value: 3,
-                      message: "Debe tener al menos 3 caracteres",
+                      value: 5,
+                      message: "El nombre de usuario debe tener entre 5 y 20 caracteres",
                     },
                     maxLength: {
                       value: 20,
-                      message: "No puede superar los 20 caracteres",
-                    },
-                    pattern: {
-                      value: /^[a-zA-Z0-9._-]+$/,
-                      message: "Usa solo letras, numeros, puntos, guiones o guion bajo",
+                      message: "El nombre de usuario debe tener entre 5 y 20 caracteres",
                     },
                   })}
                 />
@@ -103,7 +111,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                 </span>
               </div>
               <div className={errors.username ? fieldErrorClass : fieldHintClass}>
-                {errors.username?.message || "Entre 3 y 20 caracteres. Ej: juan_10"}
+                {errors.username?.message || "Entre 5 y 20 caracteres."}
               </div>
 
               <div className="input-group mb-1">
@@ -113,10 +121,10 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                   placeholder="Correo electronico"
                   aria-label="Correo electronico"
                   {...register("email", {
-                    required: "El email es requerido",
+                    required: "Debe ingresar algun mail",
                     pattern: {
                       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Ingresa un correo valido. Ej: nombre@mail.com",
+                      message: "Correo no valido",
                     },
                   })}
                 />
@@ -125,7 +133,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                 </span>
               </div>
               <div className={errors.email ? fieldErrorClass : fieldHintClass}>
-                {errors.email?.message || "Usa un correo valido para recibir novedades y acceso."}
+                {errors.email?.message || "Ingresa un correo valido. Ej: nombre@mail.com"}
               </div>
 
               <div className="input-group mb-1">
@@ -135,10 +143,10 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                   placeholder="Numero de telefono"
                   aria-label="Numero de telefono"
                   {...register("phoneNumber", {
-                    required: "El numero de telefono es requerido",
+                    required: "Debe ingresar algun numero",
                     pattern: {
-                      value: /^[0-9+\s()-]{8,20}$/,
-                      message: "Ingresa un telefono valido. Ej: 3815551234",
+                      value: /^\d{10}$/,
+                      message: "El numero debe tener exactamente 10 digitos",
                     },
                   })}
                 />
@@ -147,7 +155,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                 </span>
               </div>
               <div className={errors.phoneNumber ? fieldErrorClass : fieldHintClass}>
-                {errors.phoneNumber?.message || "Entre 8 y 20 caracteres. Se permiten numeros y + () -"}
+                {errors.phoneNumber?.message || "Ingresa 10 digitos exactos, sin espacios ni simbolos. Ej: 3815551234"}
               </div>
 
               <div className="input-group mb-1">
@@ -157,14 +165,14 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                   placeholder="Contrasena"
                   aria-label="Contrasena"
                   {...register("password", {
-                    required: "La contrasena es requerida",
+                    required: "Debe ingresar alguna contrasena",
                     minLength: {
-                      value: 8,
-                      message: "Debe tener al menos 8 caracteres",
+                      value: 10,
+                      message: "La contrasena debe tener al menos 10 caracteres, una mayuscula, una minuscula, un numero y un simbolo",
                     },
                     pattern: {
-                      value: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
-                      message: "Debe incluir al menos una letra y un numero",
+                      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{10,}$/,
+                      message: "La contrasena debe tener al menos 10 caracteres, una mayuscula, una minuscula, un numero y un simbolo",
                     },
                   })}
                 />
@@ -178,7 +186,7 @@ const ModalRegistro = ({ isOpen, onClose }) => {
                 </button>
               </div>
               <div className={errors.password ? fieldErrorClass : fieldHintClass}>
-                {errors.password?.message || "Minimo 8 caracteres, con al menos una letra y un numero."}
+                {errors.password?.message || "Minimo 10 caracteres, con mayuscula, minuscula, numero y simbolo."}
               </div>
 
               <div className="input-group mb-1">

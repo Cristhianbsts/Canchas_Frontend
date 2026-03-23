@@ -1,5 +1,21 @@
 const url = `${import.meta.env.VITE_API_URL}/login`
 
+const getRegisterMessage = (data, fallbackMessage) => {
+  if (Array.isArray(data?.msg) && data.msg.length > 0) {
+    return data.msg.map((error) => error.msg).join("\n");
+  }
+
+  if (typeof data?.msg === "string") {
+    return data.msg;
+  }
+
+  if (typeof data?.message === "string") {
+    return data.message;
+  }
+
+  return fallbackMessage;
+};
+
 
 const logIn = async (email, password) => {
   const response = await fetch(url, {
@@ -36,7 +52,24 @@ const registerUser = async (userData) => {
     },
     body: JSON.stringify(userData),
   });
-  return await response.json();
+
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
+
+  return {
+    ...data,
+    ok: Boolean(response.ok && (data.ok ?? true)),
+    status: response.status,
+    message: getRegisterMessage(
+      data,
+      response.ok ? "Usuario creado con exito" : "Error al crear el usuario"
+    ),
+  };
 };
 
 export { logIn, getProfile, registerUser };
