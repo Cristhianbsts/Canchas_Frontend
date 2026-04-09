@@ -36,13 +36,13 @@ export const AppRouter = () => {
     <Route path="/my-bookings" element={<MyBookingsView />} />
   </Route>
 
-  
-  <Route element={<ProtectedRoute adminOnly={true} />}>
-    <Route path="/admin/" element={<AdminDashboard />} />
-    <Route path="/contact" element={<ContactScreen />} />
+  <Route path="/contact" element={<ContactScreen />} />
   <Route path="/ecommerce" element={<EcommerceView />} />
   <Route path="/fields" element={<Fields />} />
   <Route path="/producto/:id" element={<ProductDetailView />} />
+
+  <Route element={<ProtectedRoute adminOnly={true} />}>
+    <Route path="/admin/" element={<AdminDashboard />} />
   </Route>
 </Route>
  <Route path='*' element = {<ErrorScreen/>}/>
