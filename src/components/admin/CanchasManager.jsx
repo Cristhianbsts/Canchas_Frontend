@@ -11,7 +11,7 @@ export const CanchasManager = () => {
 
   const obtenerCanchas = async () => {
     try {
-      const fields = await getField();
+      const fields = await getField(true);
       if (fields) setCanchas(fields);
     } catch (error) {
       console.error("Error:", error);

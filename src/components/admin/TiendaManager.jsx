@@ -45,7 +45,7 @@ export const TiendaManager = () => {
   const cargarDatos = async () => {
     setLoading(true);
     try {
-      const [dataProd, dataCat] = await Promise.all([getProducts(), getCategories()]);
+      const [dataProd, dataCat] = await Promise.all([getProducts(undefined, true), getCategories()]);
       if (dataProd) setProductos(dataProd);
       if (dataCat.ok) setCategorias(dataCat.categories);
     } catch (error) {

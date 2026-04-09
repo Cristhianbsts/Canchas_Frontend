@@ -1,8 +1,9 @@
 const url = `${import.meta.env.VITE_API_URL}/fields`;
 
-const getField = async () => {
+const getField = async (adminRequest = false) => {
   try {
-    const response = await fetch(url, { credentials: 'include' });
+    const opts = adminRequest ? { credentials: 'include' } : {};
+    const response = await fetch(url, opts);
     const data = await response.json();
     return data.fields;
   } catch (error) {

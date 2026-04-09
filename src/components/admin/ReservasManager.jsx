@@ -16,7 +16,7 @@ export const ReservasManager = () => {
     setError("");
 
     try {
-      const fields = await getField();
+      const fields = await getField(true);
       const availableFields = Array.isArray(fields) ? fields : [];
       const bookingsData = await getBookingsByDate(dateToLoad, availableFields);
       setBookings(bookingsData);

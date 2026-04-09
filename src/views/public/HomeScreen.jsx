@@ -68,7 +68,7 @@ const HomeScreen = () => {
                         </div>
                     </div>
                     </div>
-                    <Link to="/fields#" >
+                    <Link to="/fields" >
                        <button className="availability-btn">
                         Ver disponibilidad <i className="fa fa-calendar-o" aria-hidden="true"></i>
                        </button>
@@ -122,7 +122,7 @@ const HomeScreen = () => {
                 <h2 className="market-h2">Productos Sugeridos</h2>
                 <p className="market-p">Equipate antes de entrar a la cancha</p>
                 <HomeCardList/>
-                <Link to="/ecommerce#">
+                <Link to="/ecommerce">
                     <button className="availability-btn">
                         Ver más productos <i className="fa fa-calendar-o" aria-hidden="true"></i>
                     </button>
