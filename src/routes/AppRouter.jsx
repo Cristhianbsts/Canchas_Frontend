@@ -21,31 +21,34 @@ import ErrorScreen from '../views/errorScreen';
 export const AppRouter = () => {
   return (
 
-<Routes>
-    <Route element={<PagesLayout />}>
-  <Route path="/" element={<HomeScreen />} />
-  <Route path="/about" element={<AboutScreen />} />
-  
-  <Route path="/login" element={<LoginScreen />} />
-  <Route path="/register" element={<ModalRegistro />} />
- 
+    <Routes>
+      <Route element={<PagesLayout />}>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/about" element={<AboutScreen />} />
 
-  
-  <Route element={<ProtectedRoute adminOnly={false} />}>
-    <Route path="/cart" element={<CartView />} />
-    <Route path="/my-bookings" element={<MyBookingsView />} />
-  </Route>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<ModalRegistro />} />
 
-  <Route path="/contact" element={<ContactScreen />} />
-  <Route path="/ecommerce" element={<EcommerceView />} />
-  <Route path="/fields" element={<Fields />} />
-  <Route path="/producto/:id" element={<ProductDetailView />} />
 
-  <Route element={<ProtectedRoute adminOnly={true} />}>
-    <Route path="/admin/" element={<AdminDashboard />} />
-  </Route>
-</Route>
- <Route path='*' element = {<ErrorScreen/>}/>
-</Routes>
+
+        <Route element={<ProtectedRoute adminOnly={false} />}>
+          <Route path="/cart" element={<CartView />} />
+          <Route path="/my-bookings" element={<MyBookingsView />} />
+          <Route path="/ecommerce" element={<EcommerceView />} />
+          <Route path="/fields" element={<Fields />} />
+          <Route path="/producto/:id" element={<ProductDetailView />} />
+        </Route>
+
+
+        <Route element={<ProtectedRoute adminOnly={true} />}>
+          <Route path="/admin/" element={<AdminDashboard />} />
+          <Route path="/contact" element={<ContactScreen />} />
+          <Route path="/ecommerce" element={<EcommerceView />} />
+          <Route path="/fields" element={<Fields />} />
+          <Route path="/producto/:id" element={<ProductDetailView />} />
+        </Route>
+      </Route>
+      <Route path='*' element={<ErrorScreen />} />
+    </Routes>
   );
 };
