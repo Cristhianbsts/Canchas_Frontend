@@ -1,3 +1,5 @@
+import { getFriendlyErrorMessage } from "./handleApiError";
+
 const url = `${import.meta.env.VITE_API_URL}/login`
 const LOGOUT_FLAG_KEY = "auth:manual_logout";
 
@@ -29,6 +31,14 @@ const logIn = async (email, password) => {
   });
 
   const data = await response.json();
+
+  if (!response.ok) {
+    return {
+      ...data,
+      ok: false,
+      message: getFriendlyErrorMessage(response, data, data?.msg || data?.message || "Error al iniciar sesión")
+    };
+  }
 
   if (response.ok && data?.ok !== false) {
     localStorage.removeItem(LOGOUT_FLAG_KEY);

@@ -1,3 +1,5 @@
+import { getFriendlyErrorMessage } from "../helpers/handleApiError";
+
 const API_URL = `${import.meta.env.VITE_API_URL}/cart`;
 
 export const getCartRequest = async () => {
@@ -14,7 +16,7 @@ export const getCartRequest = async () => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error al obtener carrito");
+    throw new Error(getFriendlyErrorMessage(response, data, "Error al obtener carrito"));
   }
 
   return data;
@@ -36,7 +38,7 @@ export const addProductToCartRequest = async ({ product, quantity = 1 }) => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error al agregar producto al carrito");
+    throw new Error(getFriendlyErrorMessage(response, data, "Error al agregar producto al carrito"));
   }
 
   return data;
@@ -55,7 +57,7 @@ export const updateCartItemRequest = async (productId, quantity) => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error al actualizar carrito");
+    throw new Error(getFriendlyErrorMessage(response, data, "Error al actualizar carrito"));
   }
 
   return data;
@@ -70,7 +72,7 @@ export const removeCartItemRequest = async (productId) => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error al eliminar producto");
+    throw new Error(getFriendlyErrorMessage(response, data, "Error al eliminar producto"));
   }
 
   return data;
@@ -85,7 +87,7 @@ export const clearCartRequest = async () => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error al vaciar carrito");
+    throw new Error(getFriendlyErrorMessage(response, data, "Error al vaciar carrito"));
   }
 
   return data;
