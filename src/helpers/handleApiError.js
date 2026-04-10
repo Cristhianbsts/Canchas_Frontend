@@ -23,8 +23,11 @@ export const getFriendlyErrorMessage = (response, data, defaultMessage = "Error 
     payloadText.includes("policy returned unauthorized");
   const hasUnauthorizedHint =
     payloadText.includes("unauthorized") || payloadText.includes("forbidden");
+  const hasPolicyUnauthorizedHint =
+    payloadText.includes("at least one policy returned unauthorized") ||
+    payloadText.includes("policy returned unauthorized");
 
-  if (isUnauthorizedStatus && hasSuspensionHint) {
+  if (isUnauthorizedStatus && (hasSuspensionHint || hasPolicyUnauthorizedHint || hasUnauthorizedHint)) {
     return SUSPENDED_ACCOUNT_MESSAGE;
   }
 

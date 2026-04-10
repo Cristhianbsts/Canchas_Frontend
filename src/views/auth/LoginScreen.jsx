@@ -26,6 +26,19 @@ const LoginScreen = () => {
 
   const onSubmit = async (data) => {
     const response = await logIn(data.email, data.password);
+
+    if (
+      !response?.ok &&
+      typeof response?.message === "string" &&
+      response.message.toLowerCase().includes("unauthorized")
+    ) {
+      setResponse({
+        ...response,
+        message: SUSPENDED_ACCOUNT_MESSAGE,
+      });
+      return;
+    }
+
     setResponse(response);
 
     if (response.ok) {
