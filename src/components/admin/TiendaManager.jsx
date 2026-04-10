@@ -62,34 +62,42 @@ export const TiendaManager = () => {
     }
   };
 
-  const handleNumberChange = (field, value) => {
-    if (value === "") {
-      setFormProd((prev) => ({
-        ...prev,
-        [field]: "",
-      }));
-      return;
-    }
+  const handleSoloNumeros = (field, value) => {
+    const valorLimpio = value.replace(/\D/g, "");
 
-    if (/^\d+$/.test(value)) {
-      setFormProd((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
+    setFormProd((prev) => ({
+      ...prev,
+      [field]: valorLimpio,
+    }));
+  };
+
+  const bloquearTeclasInvalidas = (e) => {
+    if (["-", "+", "e", "E", ".", ","].includes(e.key)) {
+      e.preventDefault();
     }
   };
 
-  const bloquearTeclasNegativas = (e) => {
-    if (["-", "+", "e", "E"].includes(e.key)) {
-      e.preventDefault();
-    }
+  const handlePasteSoloNumeros = (e, field) => {
+    e.preventDefault();
+    const textoPegado = (e.clipboardData || window.clipboardData).getData("text");
+    const valorLimpio = textoPegado.replace(/\D/g, "");
+
+    setFormProd((prev) => ({
+      ...prev,
+      [field]: valorLimpio,
+    }));
   };
 
   const guardarProducto = async (e) => {
     e.preventDefault();
 
-    if (formProd.price === "" || Number(formProd.price) < 0 || formProd.stock === "" || Number(formProd.stock) < 0) {
-      alert("No se pueden ingresar números negativos ni dejar campos vacíos.");
+    if (formProd.price === "" || formProd.stock === "") {
+      alert("Precio y stock son obligatorios.");
+      return;
+    }
+
+    if (Number(formProd.price) < 0 || Number(formProd.stock) < 0) {
+      alert("No se pueden ingresar números negativos ni en precio ni en stock.");
       return;
     }
 
@@ -167,6 +175,8 @@ export const TiendaManager = () => {
     setPreview(producto.image || IMAGE_DEFAULT);
     setFormProd({
       ...producto,
+      price: String(producto.price ?? ""),
+      stock: String(producto.stock ?? ""),
       category: producto.category?._id || producto.category,
       imageFile: null,
     });
@@ -407,10 +417,10 @@ export const TiendaManager = () => {
                   className="form-control text-uppercase fw-bold"
                   value={formProd.name}
                   onChange={(e) =>
-                    setFormProd({
-                      ...formProd,
+                    setFormProd((prev) => ({
+                      ...prev,
                       name: e.target.value,
-                    })
+                    }))
                   }
                   required
                 />
@@ -423,8 +433,9 @@ export const TiendaManager = () => {
                   inputMode="numeric"
                   className="form-control fw-bold"
                   value={formProd.price}
-                  onKeyDown={bloquearTeclasNegativas}
-                  onChange={(e) => handleNumberChange("price", e.target.value)}
+                  onKeyDown={bloquearTeclasInvalidas}
+                  onChange={(e) => handleSoloNumeros("price", e.target.value)}
+                  onPaste={(e) => handlePasteSoloNumeros(e, "price")}
                   required
                 />
               </div>
@@ -436,8 +447,9 @@ export const TiendaManager = () => {
                   inputMode="numeric"
                   className="form-control fw-bold"
                   value={formProd.stock}
-                  onKeyDown={bloquearTeclasNegativas}
-                  onChange={(e) => handleNumberChange("stock", e.target.value)}
+                  onKeyDown={bloquearTeclasInvalidas}
+                  onChange={(e) => handleSoloNumeros("stock", e.target.value)}
+                  onPaste={(e) => handlePasteSoloNumeros(e, "stock")}
                   required
                 />
               </div>
@@ -448,10 +460,10 @@ export const TiendaManager = () => {
                   className="form-select"
                   value={formProd.category}
                   onChange={(e) =>
-                    setFormProd({
-                      ...formProd,
+                    setFormProd((prev) => ({
+                      ...prev,
                       category: e.target.value,
-                    })
+                    }))
                   }
                   required
                 >
@@ -473,10 +485,10 @@ export const TiendaManager = () => {
                   rows="2"
                   value={formProd.description}
                   onChange={(e) =>
-                    setFormProd({
-                      ...formProd,
+                    setFormProd((prev) => ({
+                      ...prev,
                       description: e.target.value,
-                    })
+                    }))
                   }
                   placeholder="Ej: Bebida isotonic 500ml"
                 ></textarea>
