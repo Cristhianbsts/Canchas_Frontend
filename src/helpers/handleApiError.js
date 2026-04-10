@@ -1,6 +1,6 @@
 export const getFriendlyErrorMessage = (response, data, defaultMessage = "Error en la solicitud") => {
-  const hasUnauthorizedMessage = 
-    data?.msg?.includes("UNAUTHORIZED") || 
+  const hasUnauthorizedMessage =
+    data?.msg?.includes("UNAUTHORIZED") ||
     data?.message?.includes("UNAUTHORIZED") ||
     data?.msg?.toLowerCase().includes("suspend") ||
     data?.message?.toLowerCase().includes("suspend");
