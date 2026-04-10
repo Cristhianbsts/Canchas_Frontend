@@ -34,21 +34,18 @@ export const AppRouter = () => {
         <Route element={<ProtectedRoute adminOnly={false} />}>
           <Route path="/cart" element={<CartView />} />
           <Route path="/my-bookings" element={<MyBookingsView />} />
-          <Route path="/ecommerce" element={<EcommerceView />} />
-          <Route path="/fields" element={<Fields />} />
-          <Route path="/producto/:id" element={<ProductDetailView />} />
         </Route>
 
+        <Route path="/contact" element={<ContactScreen />} />
+        <Route path="/ecommerce" element={<EcommerceView />} />
+        <Route path="/fields" element={<Fields />} />
+        <Route path="/producto/:id" element={<ProductDetailView />} />
 
         <Route element={<ProtectedRoute adminOnly={true} />}>
-          <Route path="/admin/" element={<AdminDashboard />} />
-          <Route path="/contact" element={<ContactScreen />} />
-          <Route path="/ecommerce" element={<EcommerceView />} />
-          <Route path="/fields" element={<Fields />} />
-          <Route path="/producto/:id" element={<ProductDetailView />} />
+          <Route path="/admin/*" element={<AdminDashboard />} />
         </Route>
       </Route>
-      <Route path='*' element={<ErrorScreen />} />
+      <Route path="*" element={<ErrorScreen />} />
     </Routes>
   );
 };
