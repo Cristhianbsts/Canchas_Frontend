@@ -27,12 +27,17 @@ export const TiendaManager = () => {
     active: true,
     imageFile: null,
   });
+
   const [formCat, setFormCat] = useState({ name: "" });
 
   const cargarDatos = async () => {
     setLoading(true);
     try {
-      const [dataProd, dataCat] = await Promise.all([getProducts(undefined, true), getCategories()]);
+      const [dataProd, dataCat] = await Promise.all([
+        getProducts(undefined, true),
+        getCategories(),
+      ]);
+
       if (dataProd) setProductos(dataProd);
       if (dataCat.ok) setCategorias(dataCat.categories);
     } catch (error) {
@@ -49,7 +54,10 @@ export const TiendaManager = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormProd({ ...formProd, imageFile: file });
+      setFormProd((prev) => ({
+        ...prev,
+        imageFile: file,
+      }));
       setPreview(URL.createObjectURL(file));
     }
   };
@@ -76,10 +84,20 @@ export const TiendaManager = () => {
 
     try {
       const res = await saveProduct(editandoId, data);
+
       if (res.ok) {
         setMostrarModalProd(false);
         setEditandoId(null);
         setPreview(null);
+        setFormProd({
+          name: "",
+          price: "",
+          stock: "",
+          category: "",
+          description: "",
+          active: true,
+          imageFile: null,
+        });
         cargarDatos();
       } else {
         alert(res.message);
@@ -92,11 +110,14 @@ export const TiendaManager = () => {
 
   const guardarCategoria = async (e) => {
     e.preventDefault();
+
     try {
       const res = await saveCategory(editandoId, formCat);
+
       if (res.ok) {
         setMostrarModalCat(false);
         setEditandoId(null);
+        setFormCat({ name: "" });
         cargarDatos();
       } else {
         alert(res.message);
@@ -109,6 +130,7 @@ export const TiendaManager = () => {
 
   const borrarItem = async (tipo, id, nombre) => {
     if (!window.confirm(`Estas seguro que deseas eliminar "${nombre}"?`)) return;
+
     try {
       const data = tipo === "prod" ? await deleteProduct(id) : await deleteCategory(id);
       if (data.ok) cargarDatos();
@@ -137,9 +159,11 @@ export const TiendaManager = () => {
           </h2>
           <p className="text-muted mb-0">Gestion de inventario y clasificacion</p>
         </div>
+
         <button
           onClick={() => {
             setEditandoId(null);
+
             if (tabActiva === "productos") {
               setPreview(IMAGE_DEFAULT);
               setFormProd({
@@ -168,7 +192,8 @@ export const TiendaManager = () => {
       <ul className="nav nav-tabs mb-4 border-bottom">
         <li className="nav-item">
           <button
-            className={`nav-link border-0 ${tabActiva === "productos" ? "active fw-bold" : "text-muted"}`}
+            className={`nav-link border-0 ${tabActiva === "productos" ? "active fw-bold" : "text-muted"
+              }`}
             onClick={() => setTabActiva("productos")}
             style={
               tabActiva === "productos"
@@ -183,9 +208,11 @@ export const TiendaManager = () => {
             Productos ({productos.length})
           </button>
         </li>
+
         <li className="nav-item">
           <button
-            className={`nav-link border-0 ${tabActiva === "categorias" ? "active fw-bold" : "text-muted"}`}
+            className={`nav-link border-0 ${tabActiva === "categorias" ? "active fw-bold" : "text-muted"
+              }`}
             onClick={() => setTabActiva("categorias")}
             style={
               tabActiva === "categorias"
@@ -245,6 +272,7 @@ export const TiendaManager = () => {
                     <i className="bi bi-pencil-square"></i>
                     Editar
                   </button>
+
                   <button
                     onClick={() => borrarItem("prod", producto._id, producto.name)}
                     className="btn btn-outline-danger btn-sm d-flex align-items-center justify-content-center gap-1 product-card-action-btn"
@@ -293,6 +321,7 @@ export const TiendaManager = () => {
                         <i className="bi bi-pencil-square"></i>
                         Editar
                       </button>
+
                       <button
                         onClick={() => borrarItem("cat", categoria._id, categoria.name)}
                         className="btn btn-sm btn-outline-danger d-flex align-items-center gap-2 px-3 fw-medium"
@@ -321,7 +350,8 @@ export const TiendaManager = () => {
             <h5 className="fw-bold mb-4">
               {editandoId ? "Actualizar Producto" : "Crear Nuevo Producto"}
             </h5>
-            <form onSubmit={guardarProducto} className="row g-3">
+
+            <form onSubmit={guardarProducto} noValidate className="row g-3">
               <div className="col-12 text-center mb-2">
                 <div
                   className="border rounded p-2 bg-light mx-auto"
@@ -334,8 +364,11 @@ export const TiendaManager = () => {
                   />
                 </div>
               </div>
+
               <div className="col-12">
-                <label className="form-label small fw-bold text-muted">Imagen del producto</label>
+                <label className="form-label small fw-bold text-muted">
+                  Imagen del producto
+                </label>
                 <input
                   type="file"
                   className="form-control form-control-sm"
@@ -343,44 +376,66 @@ export const TiendaManager = () => {
                   onChange={handleFileChange}
                 />
               </div>
+
               <div className="col-12">
                 <label className="form-label small fw-bold text-muted">Nombre</label>
                 <input
                   type="text"
                   className="form-control text-uppercase fw-bold"
                   value={formProd.name}
-                  onChange={(e) => setFormProd({ ...formProd, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormProd({
+                      ...formProd,
+                      name: e.target.value,
+                    })
+                  }
                   required
                 />
               </div>
+
               <div className="col-md-6">
                 <label className="form-label small fw-bold text-muted">Precio ($)</label>
                 <input
                   type="number"
-                  min="0"
                   className="form-control fw-bold"
                   value={formProd.price}
-                  onChange={(e) => setFormProd({ ...formProd, price: e.target.value })}
+                  onChange={(e) =>
+                    setFormProd({
+                      ...formProd,
+                      price: e.target.value,
+                    })
+                  }
                   required
                 />
               </div>
+
               <div className="col-md-6">
                 <label className="form-label small fw-bold text-muted">Stock inicial</label>
                 <input
                   type="number"
-                  min="0"
                   className="form-control fw-bold"
                   value={formProd.stock}
-                  onChange={(e) => setFormProd({ ...formProd, stock: e.target.value })}
+                  onChange={(e) =>
+                    setFormProd({
+                      ...formProd,
+                      stock: e.target.value,
+                    })
+                  }
                   required
                 />
               </div>
+
               <div className="col-12">
                 <label className="form-label small fw-bold text-muted">Categoria</label>
                 <select
                   className="form-select"
                   value={formProd.category}
-                  onChange={(e) => setFormProd({ ...formProd, category: e.target.value })}
+                  onChange={(e) =>
+                    setFormProd({
+                      ...formProd,
+                      category: e.target.value,
+                    })
+                  }
                   required
                 >
                   <option value="">Seleccione una categoria...</option>
@@ -391,16 +446,25 @@ export const TiendaManager = () => {
                   ))}
                 </select>
               </div>
+
               <div className="col-12">
-                <label className="form-label small fw-bold text-muted">Descripcion corta</label>
+                <label className="form-label small fw-bold text-muted">
+                  Descripcion corta
+                </label>
                 <textarea
                   className="form-control"
                   rows="2"
                   value={formProd.description}
-                  onChange={(e) => setFormProd({ ...formProd, description: e.target.value })}
+                  onChange={(e) =>
+                    setFormProd({
+                      ...formProd,
+                      description: e.target.value,
+                    })
+                  }
                   placeholder="Ej: Bebida isotonic 500ml"
                 ></textarea>
               </div>
+
               <div className="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
                 <button
                   type="button"
@@ -409,6 +473,7 @@ export const TiendaManager = () => {
                 >
                   Cancelar
                 </button>
+
                 <button
                   type="submit"
                   className="btn text-white px-4 fw-bold"
@@ -431,18 +496,26 @@ export const TiendaManager = () => {
             <h5 className="fw-bold mb-4">
               {editandoId ? "Editar Categoria" : "Nueva Categoria"}
             </h5>
+
             <form onSubmit={guardarCategoria}>
               <div className="mb-4">
-                <label className="form-label small fw-bold text-muted">Nombre de la categoria</label>
+                <label className="form-label small fw-bold text-muted">
+                  Nombre de la categoria
+                </label>
                 <input
                   type="text"
                   className="form-control fw-bold text-uppercase"
                   value={formCat.name}
-                  onChange={(e) => setFormCat({ name: e.target.value })}
+                  onChange={(e) =>
+                    setFormCat({
+                      name: e.target.value,
+                    })
+                  }
                   required
                   placeholder="Ej: BEBIDAS"
                 />
               </div>
+
               <div className="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
                 <button
                   type="button"
@@ -451,6 +524,7 @@ export const TiendaManager = () => {
                 >
                   Cancelar
                 </button>
+
                 <button
                   type="submit"
                   className="btn text-white px-4 fw-bold"
