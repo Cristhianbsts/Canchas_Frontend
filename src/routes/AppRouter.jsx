@@ -10,43 +10,15 @@ import ModalRegistro from '../components/ModalRegistro';
 import CartView from '../views/CartView';
 import EcommerceView from '../views/EcommerceView';
 import PagesLayout from '../layout/PagesLayout';
-import ProductDetailView from "../views/ProductDetailView";
+import ProductDetailView from '../views/ProductDetailView';
 import MyBookingsView from '../views/MyBookingsView';
 
 import { ProtectedRoute } from './ProtectedRoute';
-import Fields from "../views/public/Fields"
+import Fields from '../views/public/Fields';
 import ErrorScreen from '../views/errorScreen';
-
 
 export const AppRouter = () => {
   return (
-
-<Routes>
-    <Route element={<PagesLayout />}>
-  <Route path="/" element={<HomeScreen />} />
-  <Route path="/about" element={<AboutScreen />} />
-  
-  <Route path="/login" element={<LoginScreen />} />
-  <Route path="/register" element={<ModalRegistro />} />
- 
-
-  
-  <Route element={<ProtectedRoute adminOnly={false} />}>
-    <Route path="/cart" element={<CartView />} />
-    <Route path="/my-bookings" element={<MyBookingsView />} />
-    <Route path="/ecommerce" element={<EcommerceView />} />
-    <Route path="/fields" element={<Fields />} />
-    <Route path="/producto/:id" element={<ProductDetailView />} />
-  </Route>
-
-  
-  <Route element={<ProtectedRoute adminOnly={true} />}>
-    <Route path="/admin/" element={<AdminDashboard />} />
-    <Route path="/contact" element={<ContactScreen />} />
-  </Route>
-</Route>
- <Route path='*' element = {<ErrorScreen/>}/>
-</Routes>
     <Routes>
       <Route element={<PagesLayout />}>
         <Route path="/" element={<HomeScreen />} />
@@ -54,8 +26,6 @@ export const AppRouter = () => {
 
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<ModalRegistro />} />
-
-
 
         <Route element={<ProtectedRoute adminOnly={false} />}>
           <Route path="/cart" element={<CartView />} />
@@ -65,7 +35,6 @@ export const AppRouter = () => {
           <Route path="/producto/:id" element={<ProductDetailView />} />
         </Route>
 
-
         <Route element={<ProtectedRoute adminOnly={true} />}>
           <Route path="/admin/" element={<AdminDashboard />} />
           <Route path="/contact" element={<ContactScreen />} />
@@ -74,8 +43,8 @@ export const AppRouter = () => {
           <Route path="/producto/:id" element={<ProductDetailView />} />
         </Route>
       </Route>
-      <Route path='*' element={<ErrorScreen />} />
-    </Routes>
 
+      <Route path="*" element={<ErrorScreen />} />
+    </Routes>
   );
 };
