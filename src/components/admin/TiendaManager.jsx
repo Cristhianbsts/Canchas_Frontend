@@ -62,6 +62,29 @@ export const TiendaManager = () => {
     }
   };
 
+  const handleNumberChange = (field, value) => {
+    if (value === "") {
+      setFormProd((prev) => ({
+        ...prev,
+        [field]: "",
+      }));
+      return;
+    }
+
+    if (/^\d+$/.test(value)) {
+      setFormProd((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    }
+  };
+
+  const bloquearTeclasNegativas = (e) => {
+    if (["-", "+", "e", "E"].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const guardarProducto = async (e) => {
     e.preventDefault();
 
@@ -397,14 +420,13 @@ export const TiendaManager = () => {
                 <label className="form-label small fw-bold text-muted">Precio ($)</label>
                 <input
                   type="number"
+                  inputMode="numeric"
+                  min="0"
+                  step="1"
                   className="form-control fw-bold"
                   value={formProd.price}
-                  onChange={(e) =>
-                    setFormProd({
-                      ...formProd,
-                      price: e.target.value,
-                    })
-                  }
+                  onKeyDown={bloquearTeclasNegativas}
+                  onChange={(e) => handleNumberChange("price", e.target.value)}
                   required
                 />
               </div>
@@ -413,14 +435,13 @@ export const TiendaManager = () => {
                 <label className="form-label small fw-bold text-muted">Stock inicial</label>
                 <input
                   type="number"
+                  inputMode="numeric"
+                  min="0"
+                  step="1"
                   className="form-control fw-bold"
                   value={formProd.stock}
-                  onChange={(e) =>
-                    setFormProd({
-                      ...formProd,
-                      stock: e.target.value,
-                    })
-                  }
+                  onKeyDown={bloquearTeclasNegativas}
+                  onChange={(e) => handleNumberChange("stock", e.target.value)}
                   required
                 />
               </div>
