@@ -1,23 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 export const ProtectedRoute = ({ adminOnly = false }) => {
-  const { user, loadUserData } = useContext(UserContext);
-  const [isChecking, setIsChecking] = useState(true);
+  const { user, isLoadingUser } = useContext(UserContext);
   const location = useLocation();
+  const isAdminUser = user?.role === "admin" || user?.role === "superadmin";
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      if (!user) {
-        await loadUserData();
-      }
-      setIsChecking(false);
-    };
-    checkAuth();
-  }, [user, loadUserData]);
-
-  if (isChecking) {
+  if (isLoadingUser) {
     return (
       <div className="d-flex justify-content-center align-items-center min-vh-100">
         <div className="spinner-border text-primary" role="status">
@@ -33,7 +23,7 @@ export const ProtectedRoute = ({ adminOnly = false }) => {
   }
 
   // Si requiere ser admin y el usuario no lo es
-  if (adminOnly && user.role !== "admin" && user.role !== "superadmin") {
+  if (adminOnly && !isAdminUser) {
     return <Navigate to="/" replace />;
   }
 

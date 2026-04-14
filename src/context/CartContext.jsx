@@ -6,6 +6,7 @@ import {
   removeCartItemRequest,
   clearCartRequest,
 } from "../services/cartService";
+import { UserContext } from "./UserContext";
 
 export const CartContext = createContext();
 
@@ -13,6 +14,7 @@ export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loadingCart, setLoadingCart] = useState(false);
+  const { user, isLoadingUser } = useContext(UserContext);
 
   const resetCartState = () => {
     setItems([]);
@@ -52,8 +54,15 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (isLoadingUser) return;
+
+    if (!user?._id) {
+      resetCartState();
+      return;
+    }
+
     loadCart();
-  }, []);
+  }, [user, isLoadingUser]);
 
   const addToCart = async (product) => {
     try {

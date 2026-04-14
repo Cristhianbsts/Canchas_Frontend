@@ -13,6 +13,7 @@ const Navbar = () => {
   const { user, clearUserData } = useContext(UserContext);
   const { items, resetCartState } = useCartContext();
   const navigate = useNavigate();
+  const isAdminUser = user?.role === "admin" || user?.role === "superadmin";
 
   const totalCartItems = items.reduce(
     (total, item) => total + (Number(item?.quantity) || 0),
@@ -60,7 +61,7 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {user && user.role === "admin" && (
+            {isAdminUser && (
               <li className="nav-item-custom">
                 <NavLink to="/admin" className={buildNavClass}>
                   <i className="bi bi-columns-gap"></i>
@@ -69,7 +70,7 @@ const Navbar = () => {
               </li>
             )}
 
-            {user && user.role !== "admin" && (
+            {user && !isAdminUser && (
               <li className="nav-item-custom">
                 <NavLink to="/my-bookings" className={buildNavClass}>
                   <i className="bi bi-calendar2-check"></i>
@@ -78,7 +79,7 @@ const Navbar = () => {
               </li>
             )}
 
-            {user && user.role !== "admin" && (
+            {user && !isAdminUser && (
               <li className="nav-item-custom">
                 <NavLink to="/cart" className={buildNavClass}>
                   <span className="nav-icon-wrapper">
