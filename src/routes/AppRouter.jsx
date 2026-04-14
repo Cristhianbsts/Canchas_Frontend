@@ -24,13 +24,13 @@ export const AppRouter = () => {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/about" element={<AboutScreen />} />
         <Route path="/contact" element={<ContactScreen />} />
-        <Route path="/ecommerce" element={<EcommerceView />} />
-        <Route path="/producto/:id" element={<ProductDetailView />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<ModalRegistro />} />
 
         <Route element={<ProtectedRoute adminOnly={false} />}>
           <Route path="/fields" element={<Fields />} />
+          <Route path="/ecommerce" element={<EcommerceView />} />
+          <Route path="/producto/:id" element={<ProductDetailView />} />
           <Route path="/cart" element={<CartView />} />
           <Route path="/my-bookings" element={<MyBookingsView />} />
         </Route>
