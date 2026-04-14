@@ -7,6 +7,38 @@ import ProductCardShelf from "../ProductCardShelf";
 
 const IMAGE_DEFAULT =
   "https://res.cloudinary.com/dp7qbi976/image/upload/v1733325605/v7fiv6xngp8o78v7a3sd.webp";
+const PRODUCT_NAME_MIN = 2;
+const PRODUCT_NAME_MAX = 20;
+const PRODUCT_DESCRIPTION_MAX = 500;
+
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const stripValidationPrefix = (message) =>
+  String(message || "")
+    .trim()
+    .replace(/^(product\s+)?validation failed:\s*/i, "")
+    .replace(/^(name|price|stock|category|description)\s*:\s*/i, "");
+
+const extractFieldMessage = (message, fieldName) => {
+  const normalizedMessage = stripValidationPrefix(message);
+
+  if (!normalizedMessage) {
+    return "";
+  }
+
+  const parts = normalizedMessage.split(/,\s*(?=[a-zA-Z_]+\s*:)/);
+
+  for (const part of parts) {
+    const match = part.match(/^([a-zA-Z_]+)\s*:\s*(.+)$/);
+
+    if (match && match[1].toLowerCase() === String(fieldName).toLowerCase()) {
+      return match[2].trim();
+    }
+  }
+
+  const fieldPrefix = new RegExp(`^${escapeRegExp(fieldName)}\\s*:\\s*`, "i");
+  return normalizedMessage.replace(fieldPrefix, "").trim();
+};
 
 export const TiendaManager = () => {
   const [tabActiva, setTabActiva] = useState("productos");
@@ -83,12 +115,17 @@ export const TiendaManager = () => {
       archivo: "imageFile",
     };
     const backendErrors = res?.errors;
+    const backendDetails = res?.details;
     let hasMappedErrors = false;
 
     const registerMappedError = (rawField, issue) => {
       const fieldName = rawField || issue?.path || issue?.param || issue?.field;
       const targetField = fieldMap[fieldName];
-      const message = issue?.msg || issue?.message || issue;
+      const rawMessage = issue?.msg || issue?.message || issue;
+      const message =
+        targetField && typeof rawMessage === "string"
+          ? extractFieldMessage(rawMessage, fieldName)
+          : rawMessage;
 
       if (targetField && typeof message === "string" && message.trim()) {
         hasMappedErrors = true;
@@ -108,8 +145,42 @@ export const TiendaManager = () => {
       });
     }
 
+    if (Array.isArray(backendDetails)) {
+      backendDetails.forEach((issue) => registerMappedError(issue?.field, issue));
+    } else if (backendDetails && typeof backendDetails === "object") {
+      Object.entries(backendDetails).forEach(([field, issue]) => {
+        if (Array.isArray(issue)) {
+          issue.forEach((item) => registerMappedError(field, item));
+          return;
+        }
+        registerMappedError(field, issue);
+      });
+    }
+
+    if (!hasMappedErrors && typeof res?.message === "string") {
+      if (/ya existe un producto con ese nombre/i.test(res.message)) {
+        hasMappedErrors = true;
+        setError("name", { type: "server", message: res.message.trim() });
+      } else {
+        ["name", "price", "stock", "category", "description"].forEach((field) => {
+          const hasFieldPrefix = new RegExp(`\\b${escapeRegExp(field)}\\s*:`, "i").test(res.message);
+
+          if (!hasMappedErrors && hasFieldPrefix) {
+            const parsedMessage = extractFieldMessage(res.message, field);
+
+            if (parsedMessage) {
+              hasMappedErrors = true;
+              setError(fieldMap[field], { type: "server", message: parsedMessage });
+            }
+          }
+        });
+      }
+    }
+
     if (!hasMappedErrors) {
-      setProductSubmitError(res?.message || "No se pudo guardar el producto.");
+      setProductSubmitError(
+        stripValidationPrefix(res?.message) || "No se pudo guardar el producto."
+      );
     }
   };
 
@@ -427,10 +498,19 @@ export const TiendaManager = () => {
                 <input
                   type="text"
                   className={`form-control text-uppercase fw-bold ${errors.name ? "is-invalid" : ""}`}
+                  maxLength={PRODUCT_NAME_MAX}
                   {...register("name", {
                     required: "El nombre es obligatorio.",
-                    validate: (value) =>
-                      value.trim().length > 0 || "El nombre es obligatorio.",
+                    validate: {
+                      notBlank: (value) =>
+                        value.trim().length > 0 || "El nombre es obligatorio.",
+                      minLength: (value) =>
+                        value.trim().length >= PRODUCT_NAME_MIN ||
+                        `El nombre debe tener al menos ${PRODUCT_NAME_MIN} caracteres.`,
+                      maxLength: (value) =>
+                        value.trim().length <= PRODUCT_NAME_MAX ||
+                        `El nombre no puede superar ${PRODUCT_NAME_MAX} caracteres.`,
+                    },
                   })}
                 />
                 {errors.name && <small className="text-danger d-block mt-1">{errors.name.message}</small>}
@@ -440,12 +520,14 @@ export const TiendaManager = () => {
                 <label className="form-label small fw-bold text-muted">Precio ($)</label>
                 <input
                   type="number"
+                  min="0"
+                  step="0.01"
                   className={`form-control fw-bold ${errors.price ? "is-invalid" : ""}`}
                   {...register("price", {
                     required: "El precio es obligatorio.",
                     valueAsNumber: true,
                     validate: (value) =>
-                      Number.isFinite(value) || "Ingresa un precio válido.",
+                      Number.isFinite(value) || "Ingresa un precio valido.",
                     min: {
                       value: 0,
                       message: "El precio no puede ser menor a 0.",
@@ -459,12 +541,18 @@ export const TiendaManager = () => {
                 <label className="form-label small fw-bold text-muted">Stock inicial</label>
                 <input
                   type="number"
+                  min="0"
+                  step="1"
                   className={`form-control fw-bold ${errors.stock ? "is-invalid" : ""}`}
                   {...register("stock", {
                     required: "El stock inicial es obligatorio.",
                     valueAsNumber: true,
-                    validate: (value) =>
-                      Number.isFinite(value) || "Ingresa un stock válido.",
+                    validate: {
+                      isValidNumber: (value) =>
+                        Number.isFinite(value) || "Ingresa un stock valido.",
+                      isInteger: (value) =>
+                        Number.isInteger(value) || "El stock debe ser un numero entero.",
+                    },
                     min: {
                       value: 0,
                       message: "El stock no puede ser menor a 0.",
@@ -497,11 +585,20 @@ export const TiendaManager = () => {
                   Descripcion corta
                 </label>
                 <textarea
-                  className="form-control"
+                  className={`form-control ${errors.description ? "is-invalid" : ""}`}
                   rows="2"
-                  {...register("description")}
+                  maxLength={PRODUCT_DESCRIPTION_MAX}
+                  {...register("description", {
+                    validate: (value) =>
+                      !value?.trim() ||
+                      value.trim().length <= PRODUCT_DESCRIPTION_MAX ||
+                      `La descripcion no puede superar ${PRODUCT_DESCRIPTION_MAX} caracteres.`,
+                  })}
                   placeholder="Ej: Bebida isotonic 500ml"
                 ></textarea>
+                {errors.description && (
+                  <small className="text-danger d-block mt-1">{errors.description.message}</small>
+                )}
               </div>
               {productSubmitError && (
                 <div className="col-12">

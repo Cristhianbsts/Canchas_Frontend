@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "../hooks/useCart";
-import { createCartPaymentRequest } from "../services/paymentService";
+import {
+  createCartPaymentRequest,
+  MERCADO_PAGO_UNAVAILABLE_MESSAGE,
+} from "../services/paymentService";
 import { formatPrice } from "../helpers/formatPrice";
 import { getProducts, isVisibleProduct } from "../helpers/product";
 import CardProduct from "../components/CardProduct";
@@ -71,7 +74,7 @@ const CartView = () => {
       const data = await createCartPaymentRequest();
 
       if (!data?.url) {
-        throw new Error("Mercado Pago no devolvió una URL de pago");
+        throw new Error(MERCADO_PAGO_UNAVAILABLE_MESSAGE);
       }
 
       window.location.href = data.url;

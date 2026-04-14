@@ -25,6 +25,10 @@ const LoginScreen = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const redirectTarget = location.state?.from
+    ? `${location.state.from.pathname || ""}${location.state.from.search || ""}${location.state.from.hash || ""}`
+    : "/";
+
   const onSubmit = async (data) => {
     const response = await logIn(data.email, data.password);
 
@@ -53,8 +57,7 @@ const LoginScreen = () => {
         return;
       }
 
-      const nextPath = location.state?.from?.pathname || "/";
-      navigate(nextPath, { replace: true });
+      navigate(redirectTarget || "/", { replace: true });
     }
   };
 
