@@ -8,7 +8,7 @@ import ProductCardShelf from "../ProductCardShelf";
 const IMAGE_DEFAULT =
   "https://res.cloudinary.com/dp7qbi976/image/upload/v1733325605/v7fiv6xngp8o78v7a3sd.webp";
 const PRODUCT_NAME_MIN = 2;
-const PRODUCT_NAME_MAX = 80;
+const PRODUCT_NAME_MAX = 20;
 const PRODUCT_DESCRIPTION_MAX = 500;
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -16,7 +16,8 @@ const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const stripValidationPrefix = (message) =>
   String(message || "")
     .trim()
-    .replace(/^(product\s+)?validation failed:\s*/i, "");
+    .replace(/^(product\s+)?validation failed:\s*/i, "")
+    .replace(/^(name|price|stock|category|description)\s*:\s*/i, "");
 
 const extractFieldMessage = (message, fieldName) => {
   const normalizedMessage = stripValidationPrefix(message);
