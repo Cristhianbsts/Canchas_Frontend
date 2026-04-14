@@ -15,10 +15,10 @@ const Footer = () => {
                     <h4 className="footer-h4">Navegación</h4>
                     <nav className="footer-nav">
                         <ul className="footer-list">
-                            <li className="footer-nav-item"><Link className="navigation" to="/#">Inicio</Link></li>
-                            <li className="footer-nav-item"><Link className="navigation" to="/fields#">Reservar Cancha</Link></li>
-                            <li className="footer-nav-item"><Link className="navigation" to="/ecommerce#">Tienda Online</Link></li>
-                            <li className="footer-nav-item"><Link className="navigation" to="/about#">Sobre Nosotros</Link></li>
+                            <li className="footer-nav-item"><Link className="navigation" to="/">Inicio</Link></li>
+                            <li className="footer-nav-item"><Link className="navigation" to="/fields">Reservar Cancha</Link></li>
+                            <li className="footer-nav-item"><Link className="navigation" to="/ecommerce">Tienda Online</Link></li>
+                            <li className="footer-nav-item"><Link className="navigation" to="/about">Sobre Nosotros</Link></li>
                         </ul>
                     </nav>
                 </div>
@@ -26,8 +26,8 @@ const Footer = () => {
                     <h4 className="footer-h4">Soporte</h4>
                     <nav className="footer-nav">
                         <ul className="footer-list">
-                            <li><Link className="navigation" to="/error#">Términos y condiciones</Link></li>
-                            <li><Link className="navigation" to="/contact#">Contácto</Link></li>
+                            <li><Link className="navigation" to="/error">Términos y condiciones</Link></li>
+                            <li><Link className="navigation" to="/contact">Contácto</Link></li>
                         </ul>
                     </nav>
                 </div>

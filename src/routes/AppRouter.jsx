@@ -23,7 +23,10 @@ export const AppRouter = () => {
       <Route element={<PagesLayout />}>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/about" element={<AboutScreen />} />
-
+        <Route path="/contact" element={<ContactScreen />} />
+        <Route path="/fields" element={<Fields />} />
+        <Route path="/ecommerce" element={<EcommerceView />} />
+        <Route path="/producto/:id" element={<ProductDetailView />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<ModalRegistro />} />
 
@@ -34,10 +37,8 @@ export const AppRouter = () => {
 
         <Route element={<ProtectedRoute adminOnly={true} />}>
           <Route path="/admin/" element={<AdminDashboard />} />
-          <Route path="/contact" element={<ContactScreen />} />
         </Route>
       </Route>
-
       <Route path="*" element={<ErrorScreen />} />
     </Routes>
   );
