@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import "../../css/login.css";
 import imagenlogin from "../../assets/imagen1.webp";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logIn } from "../../helpers/auth";
 import { SUSPENDED_ACCOUNT_MESSAGE } from "../../helpers/handleApiError";
 import AlertApp from "../../components/AlertApp";
@@ -14,6 +14,7 @@ import ModalRegistro from "../../components/ModalRegistro";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [response, setResponse] = useState();
   const { loadUserData } = useContext(UserContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +24,10 @@ const LoginScreen = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  const redirectTarget = location.state?.from
+    ? `${location.state.from.pathname || ""}${location.state.from.search || ""}${location.state.from.hash || ""}`
+    : "/";
 
   const onSubmit = async (data) => {
     const response = await logIn(data.email, data.password);
@@ -52,7 +57,7 @@ const LoginScreen = () => {
         return;
       }
 
-      navigate("/");
+      navigate(redirectTarget || "/", { replace: true });
     }
   };
 
